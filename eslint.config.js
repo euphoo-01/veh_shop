@@ -1,8 +1,8 @@
-import { defineConfig, globalIgnores } from 'eslint/config'
-import globals from 'globals'
-import js from '@eslint/js'
-import pluginVue from 'eslint-plugin-vue'
-import prettier from 'eslint-config-prettier'
+import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
+import js from '@eslint/js';
+import pluginVue from 'eslint-plugin-vue';
+import prettier from 'eslint-config-prettier';
 
 export default defineConfig([
   {
@@ -24,4 +24,13 @@ export default defineConfig([
   ...pluginVue.configs['flat/essential'],
 
   prettier,
-])
+
+  {
+    'vue/multi-word-component-names': [
+      'error',
+      {
+        ignores: [],
+      },
+    ],
+  },
+]);

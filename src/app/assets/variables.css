@@ -1,0 +1,6 @@
+#app {
+  --primary-color: rgb(90, 170, 230);
+  --secondary-color: rgb(150, 150, 150);
+  --text-color: rgb(23, 23, 23);
+  --background-color: rgb(255, 255, 255);
+}
