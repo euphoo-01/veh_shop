@@ -1,10 +1,9 @@
 <template>
-  <svg v-html="svgCode" :class="['icon', `icon-${size}`]"></svg>
+  <span v-html="svgCode" :class="['icon', `icon-${size}`]"></span>
 </template>
 <script>
-import { getSvgIconCode } from '@/services/icons/iconsHelper';
+import { checkIfIconNameExist, getSvgIconCode } from '@/services/icons/iconsHelper';
 export default {
-  name: 'IconSVG',
   props: {
     of: {
       type: String,
@@ -23,31 +22,50 @@ export default {
       return getSvgIconCode(this.of);
     },
   },
+  watch: {
+    of(newVal) {
+      if (!checkIfIconNameExist(newVal)) {
+        console.warn(`Иконки ${newVal} не существует!`);
+      }
+    },
+  },
 };
 </script>
-<style scoped>
+<style>
 .icon {
-  box-sizing: border-box;
-  transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  display: inline-block;
+  transition: fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
   padding: 0;
   margin: 0;
 }
 
-.icon-small {
+.icon svg * {
+  transition: fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.icon:hover svg * {
+  fill: var(--primary-color);
+}
+
+.icon:active svg * {
+  fill: var(--secondary-color);
+}
+
+.icon-small svg {
   height: 12px;
   width: 12px;
   min-height: 12px;
   min-width: 12px;
 }
 
-.icon-medium {
+.icon-medium svg {
   height: 16px;
   width: 16px;
   min-height: 16px;
   min-width: 16px;
 }
 
-.icon-large {
+.icon-large svg {
   height: 24px;
   width: 24px;
   min-height: 24px;
