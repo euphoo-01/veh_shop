@@ -15,6 +15,7 @@
         size="large"
         :id="currentRoute === 'cart' && 'active-icon'"
         @click="goToCart"
+        clickable
       />
     </nav>
   </menu>

@@ -70,5 +70,6 @@ export default {
 .secondary:hover {
   border-bottom: 3px var(--primary-color) solid;
   background-color: color-mix(in srgb, var(--primary-color) 20%, transparent);
+  cursor: pointer;
 }
 </style>

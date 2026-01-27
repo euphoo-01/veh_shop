@@ -1,5 +1,5 @@
 <template>
-  <span v-html="svgCode" :class="['icon', `icon-${size}`]"></span>
+  <span v-html="svgCode" :class="{ icon: true, 'icon-[size]': true, clickable }"></span>
 </template>
 <script>
 import { checkIfIconNameExist, getSvgIconCode } from '@/services/icons/iconsHelper';
@@ -15,6 +15,10 @@ export default {
       validator: (value) => {
         return ['small', 'medium', 'large'].includes(value);
       },
+    },
+    clickable: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -43,11 +47,12 @@ export default {
   transition: fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.icon:hover svg * {
+.clickable:hover svg * {
   fill: var(--primary-color);
+  cursor: pointer;
 }
 
-.icon:active svg * {
+.clickable:active svg * {
   fill: var(--secondary-color);
 }
 
