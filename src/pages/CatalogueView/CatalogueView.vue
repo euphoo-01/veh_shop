@@ -1,16 +1,24 @@
 <template>
-  <div>
+  <main>
     <h1>Catalogue</h1>
-    <CatalogueList :vehicles="allVehicle" />
-  </div>
+    <CatalogueFilters />
+    <IconSVG v-if="isLoading" class="catalogue__spinner" of="spinner" size="extralarge" />
+    <CatalogueList v-else :vehicles="filteredVehicles" />
+  </main>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import CatalogueList from './CatalogueList.vue';
+import IconSVG from '@/components/IconSVG.vue';
+import CatalogueFilters from './CatalogueFilters.vue';
 export default {
-  components: { CatalogueList },
+  components: { CatalogueList, IconSVG, CatalogueFilters },
   computed: {
-    ...mapGetters({ allVehicle: 'vehicle/allVehicle' }),
+    ...mapGetters({
+      allVehicles: 'vehicle/allVehicles',
+      filteredVehicles: 'vehicle/filteredVehicles',
+      isLoading: 'vehicle/isLoading',
+    }),
   },
   methods: {
     ...mapActions('vehicle', ['fetchVehicles']),
@@ -20,4 +28,10 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.catalogue__spinner {
+  margin: 128px auto;
+  display: block;
+  width: fit-content;
+}
+</style>

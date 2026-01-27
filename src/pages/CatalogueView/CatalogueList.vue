@@ -1,8 +1,8 @@
 <template>
-  <div class="catalogue__list">
-    <div class="catalogue__item" v-for="vehicle in vehicles">
+  <section class="catalogue__list">
+    <div class="catalogue__item" v-for="vehicle in vehicles" :key="vehicle.id">
       <div class="item__container">
-        <img class="item__image" :src="vehicle.images[0]" :alt="`${vehicle.title} Image`" />
+        <img class="item__image" :src="vehicle.images[1]" :alt="`${vehicle.title} Image`" />
       </div>
 
       <h2>{{ vehicle.title }}</h2>
@@ -10,7 +10,7 @@
         <b>{{ vehicle.price }} $</b>
       </h2>
     </div>
-  </div>
+  </section>
 </template>
 <script>
 export default {

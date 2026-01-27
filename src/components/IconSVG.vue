@@ -1,5 +1,5 @@
 <template>
-  <span v-html="svgCode" :class="{ icon: true, 'icon-[size]': true, clickable }"></span>
+  <span v-html="svgCode" :class="{ icon: true, [`icon-${size}`]: true, clickable }"></span>
 </template>
 <script>
 import { checkIfIconNameExist, getSvgIconCode } from '@/services/icons/iconsHelper';
@@ -13,7 +13,7 @@ export default {
       type: String,
       default: 'small',
       validator: (value) => {
-        return ['small', 'medium', 'large'].includes(value);
+        return ['small', 'medium', 'large', 'extralarge'].includes(value);
       },
     },
     clickable: {
@@ -75,5 +75,12 @@ export default {
   width: 24px;
   min-height: 24px;
   min-width: 24px;
+}
+
+.icon-extralarge svg {
+  height: 64px;
+  width: 64px;
+  min-height: 64px;
+  min-width: 64px;
 }
 </style>
