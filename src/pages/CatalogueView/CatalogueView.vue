@@ -7,6 +7,7 @@
   </main>
 </template>
 <script>
+// TODO: Раздельные карточки товаров
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import CatalogueList from './CatalogueList.vue';
 import IconSVG from '@/components/IconSVG.vue';

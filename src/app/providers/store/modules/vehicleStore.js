@@ -36,7 +36,7 @@ export const vehicleStoreModule = {
         commit('setCars', cars.products || []);
         commit('setMotorcycles', motorcycles.products || []);
         commit('setLoading', false);
-      }, 1000);
+      }, 0);
     },
   },
   getters: {

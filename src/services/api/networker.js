@@ -8,10 +8,22 @@ export class Networker {
 
   async get(endpoint, options = {}) {
     try {
-      const result = await fetch(`${this.#domain}/${endpoint}`, { method: 'GET', ...options });
-      return result.json();
+      const result = await fetch(`${this.#domain}/${endpoint}`, {
+        method: 'GET',
+        ...options,
+      });
+
+      if (result.status >= 400) {
+        const error = new Error(
+          `HTTP: ${result.status}. Couldn't get data from the endpoint: ${endpoint}`,
+        );
+        error.status = result.status;
+        throw error;
+      }
+      return result.json() || {};
     } catch (e) {
-      console.error(`Не удалось получить данные с эндпоинта: ${endpoint}`, e.message);
+      console.error(`Произошла ошибка:`, e.message);
+      return e;
     }
   }
   async post(endpoint, data, options = {}) {
@@ -24,9 +36,17 @@ export class Networker {
         body: JSON.stringify(data),
         ...options,
       });
+      if (result.status >= 400) {
+        const error = new Error(
+          `HTTP: ${result.status}. Couldn't send data to the endpoint: ${endpoint}`,
+        );
+        error.status = result.status;
+        throw error;
+      }
       return result.json() || {};
     } catch (e) {
-      console.error(`Не удалось отправить данные на эндпоинт: ${endpoint}`, e.message);
+      console.error(`Произошла ошибка:`, e.message);
+      return e;
     }
   }
 }

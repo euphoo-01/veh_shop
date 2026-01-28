@@ -3,8 +3,9 @@
     :value="modelValue"
     @change="(event) => $emit('update:modelValue', event.target.value)"
     class="select__input"
+    aria-label="Select option"
   >
-    <option value="" disabled>{{ placeholder }}</option>
+    <option value="" disabled :aria-label="placeholder">{{ placeholder }}</option>
     <slot></slot>
   </select>
 </template>
@@ -28,7 +29,7 @@ export default {
   min-width: 300px;
   height: 50px;
   padding: 0px 16px;
-  background-color: white;
+  background-color: var(--background-color);
   color: var(--secondary-color);
   border: none;
   border-bottom: 3px solid var(--secondary-color);

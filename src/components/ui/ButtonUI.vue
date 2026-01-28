@@ -52,7 +52,7 @@ export default {
 .button__content {
   text-align: center;
   font-size: 16px;
-  color: black;
+  color: var(--text-color);
 }
 
 .disabled {
@@ -61,10 +61,16 @@ export default {
 
 .primary {
   background-color: var(--primary-color);
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.primary:hover {
+  background-color: var(--secondary-color);
+  cursor: pointer;
 }
 
 .secondary {
-  background-color: transparent;
+  background-color: var(--background-color);
 }
 
 .secondary:hover {

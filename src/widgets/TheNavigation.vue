@@ -7,10 +7,19 @@
       <ButtonUI @click="goToCatalogue" :id="currentRoute === 'catalogue' && 'active'" secondary
         >Catalogue</ButtonUI
       >
-      <ButtonUI @click="goToAccount" :id="currentRoute === 'account' && 'active'" secondary>
+      <ButtonUI
+        @click="goToAccount"
+        :id="currentRoute === 'account' && 'active'"
+        secondary
+        v-if="isAuthorized"
+      >
         Account
       </ButtonUI>
+      <ButtonUI @click="goToLogin" :id="currentRoute === 'login' && 'active'" secondary v-else>
+        Login
+      </ButtonUI>
       <IconSVG
+        v-if="isAuthorized"
         of="cart"
         size="large"
         :id="currentRoute === 'cart' && 'active-icon'"
@@ -27,7 +36,7 @@ import IconSVG from '@/components/IconSVG.vue';
 export default {
   components: { ButtonUI, IconSVG },
   computed: {
-    ...mapGetters({ username: 'user/getUsername' }),
+    ...mapGetters({ username: 'user/username', isAuthorized: 'user/isAuthorized' }),
     currentRoute() {
       return this.$route.name;
     },
@@ -44,6 +53,9 @@ export default {
     },
     goToCart() {
       this.$router.push({ name: 'cart', params: { username: this.username } });
+    },
+    goToLogin() {
+      this.$router.push({ name: 'login' });
     },
   },
 };

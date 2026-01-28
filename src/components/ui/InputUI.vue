@@ -18,7 +18,7 @@ export default {
 </script>
 <style scoped>
 .input {
-  background-color: white;
+  background-color: var(--background-color);
   color: var(--secondary-color);
   border: none;
   border-bottom: 3px var(--secondary-color) solid;
@@ -31,7 +31,7 @@ export default {
 }
 .input:focus {
   border-bottom: 3px var(--primary-color) solid;
-  color: black;
+  color: var(--text-color);
   outline: none;
   box-shadow: 0 0 3px -1px var(--secondary-color);
 }

@@ -45,6 +45,7 @@ export default {
 
 .icon svg * {
   transition: fill 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  fill: var(--text-color);
 }
 
 .clickable:hover svg * {
