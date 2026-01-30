@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <main>
     <h1>Cart Content</h1>
-  </div>
+  </main>
 </template>
 <script>
 export default {};

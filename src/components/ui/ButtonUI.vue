@@ -1,5 +1,6 @@
 <template>
   <button
+    :="$attrs"
     class="button"
     :class="{
       primary: this.primary,
@@ -13,6 +14,7 @@
 </template>
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     primary: {
       type: Boolean,
@@ -27,11 +29,6 @@ export default {
       type: Boolean,
     },
   },
-  computed: {
-    styles() {
-      return [this.primary, this.secondary, this.disabled].filter((el) => el);
-    },
-  },
 };
 </script>
 <style scoped>
@@ -43,6 +40,7 @@ export default {
 
   border-radius: 0px;
   border: none;
+  color: var(--text-color);
 
   transition:
     background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -70,7 +68,7 @@ export default {
 }
 
 .secondary {
-  background-color: var(--background-color);
+  background-color: transparent;
 }
 
 .secondary:hover {

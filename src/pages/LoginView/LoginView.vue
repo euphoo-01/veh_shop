@@ -1,37 +1,39 @@
 <template>
-  <section class="login__wrapper">
-    <Transition name="fade-left"
-      ><ErrorBubble v-if="error.status" :error="error" :onCleanup="clearError"
-    /></Transition>
-    <ModalUI class="login__form" static v-if="isRegistering">
-      <h1 class="login__title">Sign Up</h1>
-      <ErrorBubble
-        :error="{
-          message:
-            'Registration isn\'t available because the API doesn\'t provide such functionality',
-        }"
-      ></ErrorBubble>
-      <InputUI placeholder="Your login:" />
-      <InputUI placeholder="Your name:" />
-      <InputUI placeholder="Your number:" />
-      <InputUI placeholder="Your password:" type="password" />
-      <ButtonUI primary>Register</ButtonUI>
-      <span class="form__switcher"
-        ><p class="switcher__description">Have an account?</p>
-        <a class="switcher__action" @click="switchFormMode">Login</a></span
-      >
-    </ModalUI>
-    <ModalUI class="login__form" static v-else>
-      <h1 class="login__title">Sign In</h1>
-      <InputUI placeholder="Your login:" v-model="user.login" />
-      <InputUI placeholder="Your password:" v-model="user.password" type="password" />
-      <ButtonUI @click="login(user)" primary>Login</ButtonUI>
-      <span class="form__switcher"
-        ><p class="switcher__description">Don't have an account yet?</p>
-        <a class="switcher__action" @click="switchFormMode">Register</a></span
-      >
-    </ModalUI>
-  </section>
+  <main>
+    <section class="login__wrapper">
+      <Transition name="fade-left"
+        ><ErrorBubble v-if="error.status" :error="error" :onCleanup="clearError"
+      /></Transition>
+      <ModalUI class="login__form" static v-if="isRegistering">
+        <h1 class="login__title">Sign Up</h1>
+        <ErrorBubble
+          :error="{
+            message:
+              'Registration isn\'t available because the API doesn\'t provide such functionality',
+          }"
+        ></ErrorBubble>
+        <InputUI placeholder="Your login:" />
+        <InputUI placeholder="Your name:" />
+        <InputUI placeholder="Your number:" />
+        <InputUI placeholder="Your password:" type="password" />
+        <ButtonUI primary>Register</ButtonUI>
+        <span class="form__switcher"
+          ><p class="switcher__description">Have an account?</p>
+          <a class="switcher__action" @click="switchFormMode">Login</a></span
+        >
+      </ModalUI>
+      <ModalUI class="login__form" static v-else>
+        <h1 class="login__title">Sign In</h1>
+        <InputUI placeholder="Your login:" v-model="user.login" />
+        <InputUI placeholder="Your password:" v-model="user.password" type="password" />
+        <ButtonUI @click="login(user)" primary>Login</ButtonUI>
+        <span class="form__switcher"
+          ><p class="switcher__description">Don't have an account yet?</p>
+          <a class="switcher__action" @click="switchFormMode">Register</a></span
+        >
+      </ModalUI>
+    </section>
+  </main>
 </template>
 <script>
 import ModalUI from '@/components/ui/ModalUI.vue';

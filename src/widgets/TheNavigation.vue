@@ -1,28 +1,28 @@
 <template>
   <menu class="menu">
     <nav class="menu__content">
-      <ButtonUI @click="goToHome" :id="currentRoute === 'home' && 'active'" secondary
+      <ButtonUI @click="goToHome" :id="currentRoute === 'home' ? 'active' : ''" secondary
         >Home</ButtonUI
       >
-      <ButtonUI @click="goToCatalogue" :id="currentRoute === 'catalogue' && 'active'" secondary
+      <ButtonUI @click="goToCatalogue" :id="currentRoute === 'catalogue' ? 'active' : ''" secondary
         >Catalogue</ButtonUI
       >
       <ButtonUI
         @click="goToAccount"
-        :id="currentRoute === 'account' && 'active'"
+        :id="currentRoute === 'account' ? 'active' : ''"
         secondary
         v-if="isAuthorized"
       >
         Account
       </ButtonUI>
-      <ButtonUI @click="goToLogin" :id="currentRoute === 'login' && 'active'" secondary v-else>
+      <ButtonUI @click="goToLogin" :id="currentRoute === 'login' ? 'active' : ''" secondary v-else>
         Login
       </ButtonUI>
       <IconSVG
         v-if="isAuthorized"
         of="cart"
         size="large"
-        :id="currentRoute === 'cart' && 'active-icon'"
+        :id="currentRoute === 'cart' ? 'active-icon' : ''"
         @click="goToCart"
         clickable
       />

@@ -1,7 +1,15 @@
-#app {
+html.light {
   --primary-color: rgb(90, 170, 230);
   --secondary-color: rgb(150, 150, 150);
   --text-color: rgb(23, 23, 23);
   --background-color: rgb(255, 255, 255);
   --error-color: rgb(255, 194, 194);
+}
+
+html.dark {
+  --primary-color: rgb(63, 115, 155);
+  --secondary-color: rgb(101, 101, 101);
+  --text-color: rgb(255, 255, 255);
+  --background-color: rgb(29, 29, 29);
+  --error-color: rgb(183, 119, 119);
 }

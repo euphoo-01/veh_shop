@@ -1,14 +1,17 @@
 <template>
-  <select
-    :value="modelValue"
-    @change="(event) => $emit('update:modelValue', event.target.value)"
-    class="select__input"
-    aria-label="Select option"
-  >
-    <option value="" disabled :aria-label="placeholder">{{ placeholder }}</option>
-    <slot></slot>
-  </select>
+  <div class="select_wrapper">
+    <select
+      :value="modelValue"
+      @change="$emit('update:modelValue', $event.target.value)"
+      class="select__input"
+      aria-label="Select option"
+    >
+      <option value="" disabled>{{ placeholder }}</option>
+      <slot></slot>
+    </select>
+  </div>
 </template>
+
 <script>
 export default {
   props: {
@@ -24,11 +27,18 @@ export default {
   emits: ['update:modelValue'],
 };
 </script>
+
 <style scoped>
-.select__input {
+.select_wrapper {
+  position: relative;
+  display: inline-block;
   min-width: 300px;
+}
+
+.select__input {
+  width: 100%;
   height: 50px;
-  padding: 0px 16px;
+  padding: 0 40px 0 16px;
   background-color: var(--background-color);
   color: var(--secondary-color);
   border: none;
@@ -36,25 +46,42 @@ export default {
   font-size: 16px;
   cursor: pointer;
   outline: none;
+  appearance: none;
   transition:
     border-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
     box-shadow 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 40px;
 }
 
 .select__input:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 3px -1px var(--secondary-color);
+  color: var(--text-color);
 }
 
-.select__input:open {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 3px -1px var(--secondary-color);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='18 15 12 9 6 15'%3E%3C/polyline%3E%3C/svg%3E");
+.select_wrapper::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  z-index: 10;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--secondary-color);
+  pointer-events: none;
+  transition: border-top-color 0.2s ease;
+  transition:
+    transform 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+    border 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.select_wrapper:focus-within::after {
+  border-top-color: var(--primary-color);
+  transform: rotate(180deg);
+}
+.select__input:focus + .select_wrapper::after {
+  border-top-color: var(--primary-color);
 }
 </style>

@@ -106,6 +106,7 @@ export const userStoreModule = {
     },
     async initSession({ commit, dispatch }) {
       commit('setIsLoading', true);
+      // храню не в куках, потому что CORS dummyjson блокирует credentials: "include"
       const accessToken = localStorage.getItem('accessToken');
       const refreshToken = localStorage.getItem('refreshToken');
 

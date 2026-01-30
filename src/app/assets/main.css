@@ -2,10 +2,11 @@
 @import './variables.css';
 
 #app {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 h1,
@@ -16,9 +17,18 @@ p,
 button,
 input,
 select,
-option {
+option,
+label {
   font-family: Karla;
   color: var(--text-color);
+}
+
+body {
+  background-color: var(--background-color);
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  position: relative;
+  top: 0;
+  bottom: 0;
 }
 
 p {
