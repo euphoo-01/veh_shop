@@ -1,5 +1,5 @@
 import { networker } from '@/services/api';
-import { loginUser } from '@/services/api/auth';
+import { loginUser, getUserDataByToken } from '@/services/api/auth';
 import router from '../../router';
 
 export const userStoreModule = {
@@ -27,10 +27,11 @@ export const userStoreModule = {
       status: null,
       message: null,
     },
+    isLoading: true,
   }),
   mutations: {
     setUser(state, value) {
-      state.user = value;
+      state.user = { ...state.user, ...value };
     },
     setRefreshToken(state, value) {
       state.user.refreshToken = value;
@@ -41,6 +42,9 @@ export const userStoreModule = {
     setAuthorized(state, value) {
       state.isAuthorized = value;
     },
+    setIsLoading(state, value) {
+      state.isLoading = value;
+    },
     clearUser(state) {
       state.user = {
         username: 'unknown',
@@ -49,6 +53,13 @@ export const userStoreModule = {
         lastName: '',
         gender: '',
         image: '',
+        address: {
+          address: '',
+          city: '',
+          state: '',
+          stateCode: '',
+          postalCode: '',
+        },
         accessToken: '',
         refreshToken: '',
       };
@@ -66,7 +77,6 @@ export const userStoreModule = {
     // TODO: Обновление токенов
     async login({ commit, getters }, formData) {
       const result = await loginUser(networker, formData.login, formData.password);
-      console.log(result);
       if (result instanceof Error) {
         if (result.status === 400) {
           commit('setError', {
@@ -87,25 +97,42 @@ export const userStoreModule = {
       commit('clearUser');
       router.push({ name: 'login' });
     },
+    async getDetailedUserData({ commit, getters }) {
+      commit('setIsLoading', true);
+      const result = await getUserDataByToken(networker, getters.accessToken);
+      if (result instanceof Error) {
+        commit('setError', {
+          status: result.status,
+          message: result.message,
+        });
+        commit('setIsLoading', false);
+      } else {
+        commit('setUser', result);
+        commit('setIsLoading', false);
+      }
+    },
   },
   getters: {
     username: (state) => {
       return state.user.username;
     },
-    firstName: (state) => {
-      return state.user.firstName;
+    userData: (state) => {
+      return state.user;
     },
     isAuthorized: (state) => {
       return state.isAuthorized;
     },
     accessToken: (state) => {
-      return state.accessToken;
+      return state.user.accessToken;
     },
     refreshToken: (state) => {
-      return state.refreshToken;
+      return state.user.refreshToken;
     },
     error: (state) => {
       return state.error;
+    },
+    isLoading: (state) => {
+      return state.isLoading;
     },
   },
 };

@@ -24,8 +24,8 @@ export default {
   methods: {
     ...mapActions('vehicle', ['fetchVehicles']),
   },
-  mounted() {
-    this.fetchVehicles();
+  async mounted() {
+    await this.fetchVehicles();
   },
 };
 </script>

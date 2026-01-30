@@ -16,7 +16,7 @@ export default {
     },
     onCleanup: {
       type: Function,
-      required: true,
+      default: () => {},
     },
   },
   unmounted() {

@@ -5,6 +5,12 @@
     /></Transition>
     <ModalUI class="login__form" static v-if="isRegistering">
       <h1 class="login__title">Sign Up</h1>
+      <ErrorBubble
+        :error="{
+          message:
+            'Registration isn\'t available because the API doesn\'t provide such functionality',
+        }"
+      ></ErrorBubble>
       <InputUI placeholder="Your login:" />
       <InputUI placeholder="Your name:" />
       <InputUI placeholder="Your number:" />
