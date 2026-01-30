@@ -16,7 +16,7 @@ const router = createRouter({
       meta: { loginRequired: true },
     },
     {
-      path: '/user/login',
+      path: '/login',
       name: 'login',
       component: LoginView,
       meta: { loginRequired: false },
@@ -42,12 +42,20 @@ const router = createRouter({
   ],
 });
 
-router.beforeEach((to, from, next) => {
-  if ((to.meta.loginRequired && store.getters['user/isAuthorized']) || !to.meta.loginRequired) {
-    next();
-  } else {
-    next('/user/login');
+let initPromise = null;
+
+router.beforeEach(async (to, from, next) => {
+  if (!initPromise) {
+    initPromise = store.dispatch('user/initSession');
+    await initPromise;
   }
+
+  if (to.meta.loginRequired && !store.getters['user/isAuthorized']) {
+    next({ name: 'login' });
+    return;
+  }
+  next();
+  return;
 });
 
 export default router;

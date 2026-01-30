@@ -1,3 +1,5 @@
 import { Networker } from './networker';
 
-export const networker = new Networker();
+const domainURL = 'https://dummyjson.com';
+const networker = new Networker(domainURL);
+export { networker };

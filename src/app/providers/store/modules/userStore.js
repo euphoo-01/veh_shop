@@ -1,7 +1,6 @@
 import { networker } from '@/services/api';
-import { loginUser, getUserDataByToken } from '@/services/api/auth';
+import { loginUser, getUserDataByToken, refreshAccessToken } from '@/services/api/auth';
 import router from '../../router';
-
 export const userStoreModule = {
   namespaced: true,
   state: () => ({
@@ -33,11 +32,13 @@ export const userStoreModule = {
     setUser(state, value) {
       state.user = { ...state.user, ...value };
     },
-    setRefreshToken(state, value) {
-      state.user.refreshToken = value;
+    setRefreshToken(state, refreshToken) {
+      state.user.refreshToken = refreshToken;
+      localStorage.setItem('refreshToken', refreshToken);
     },
-    setAccessToken(state, value) {
-      state.user.accessToken = value;
+    setAccessToken(state, accessToken) {
+      state.user.accessToken = accessToken;
+      localStorage.setItem('accessToken', accessToken);
     },
     setAuthorized(state, value) {
       state.isAuthorized = value;
@@ -72,9 +73,12 @@ export const userStoreModule = {
       state.error.status = null;
       state.error.message = null;
     },
+    clearTokens() {
+      localStorage.setItem('accessToken', '');
+      localStorage.setItem('refreshToken', '');
+    },
   },
   actions: {
-    // TODO: Обновление токенов
     async login({ commit, getters }, formData) {
       const result = await loginUser(networker, formData.login, formData.password);
       if (result instanceof Error) {
@@ -88,14 +92,62 @@ export const userStoreModule = {
         }
       } else {
         commit('setUser', result);
+        commit('setAccessToken', result.accessToken);
+        commit('setRefreshToken', result.refreshToken);
         commit('setAuthorized', true);
         router.push({ name: 'account', params: { username: getters.username } });
       }
     },
-    async logout({ commit }) {
+    logout({ commit }) {
       commit('setAuthorized', false);
       commit('clearUser');
+      commit('clearTokens');
       router.push({ name: 'login' });
+    },
+    async initSession({ commit, dispatch }) {
+      commit('setIsLoading', true);
+      const accessToken = localStorage.getItem('accessToken');
+      const refreshToken = localStorage.getItem('refreshToken');
+
+      if (!accessToken && !refreshToken) {
+        commit('setIsLoading', false);
+        return;
+      }
+
+      commit('setAccessToken', accessToken);
+      commit('setRefreshToken', refreshToken);
+
+      try {
+        await dispatch('getDetailedUserData');
+      } catch {
+        dispatch('refreshSession')
+          .then((result) => {
+            commit('setAccessToken', result.accessToken);
+            commit('setRefreshToken', result.refreshToken);
+          })
+          .error(() => {
+            commit('setAuthorized', false);
+          });
+      } finally {
+        commit('setIsLoading', false);
+      }
+    },
+    async refreshSession({ commit, getters, dispatch }) {
+      commit('setIsLoading', true);
+      const result = await refreshAccessToken(networker, getters.refreshToken);
+      if (result instanceof Error) {
+        if (result.status === 403) {
+          commit('setError', { status: 403, message: 'Session expired. Please login again.' });
+        } else {
+          commit('setError', { status: result.status, message: result.message });
+        }
+        commit('setIsLoading', false);
+        dispatch('logout');
+      } else {
+        commit('setAccessToken', result.accessToken);
+        commit('setIsLoading', false);
+        commit('setAuthorized', true);
+      }
     },
     async getDetailedUserData({ commit, getters }) {
       commit('setIsLoading', true);
@@ -106,8 +158,10 @@ export const userStoreModule = {
           message: result.message,
         });
         commit('setIsLoading', false);
+        commit('setAuthorized', false);
       } else {
         commit('setUser', result);
+        commit('setAuthorized', true);
         commit('setIsLoading', false);
       }
     },

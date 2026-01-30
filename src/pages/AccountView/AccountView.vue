@@ -3,9 +3,10 @@
     <Transition name="fade-left"
       ><ErrorBubble v-if="error.message" :error="error" :onCleanup="clearError"></ErrorBubble
     ></Transition>
-    <h1 class="account_title">{{ userData.username }}'s Account</h1>
+
     <IconSVG v-if="isLoading" class="account__spinner" of="spinner" size="extralarge" />
     <section v-else class="account__info">
+      <h1 class="account_title">{{ userData.username }}'s Account</h1>
       <div class="account__info info__row">
         <img class="account__image" :src="userData.image" :alt="`${userData.username} Avatar`" />
         <div class="account__info info__column">
@@ -44,6 +45,7 @@
   </section>
 </template>
 <script>
+// TODO: Настройка для смены темы
 import ButtonUI from '@/components/ui/ButtonUI.vue';
 import IconSVG from '@/components/IconSVG.vue';
 import ErrorBubble from '@/components/ErrorBubble.vue';

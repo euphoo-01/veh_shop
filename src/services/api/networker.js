@@ -1,9 +1,13 @@
-const domainURL = 'https://dummyjson.com';
-
 export class Networker {
   #domain;
-  constructor(domain = domainURL) {
+  #refreshCallback;
+  #refreshingTokens = null; // чтобы не было гонки
+  constructor(domain) {
     this.#domain = domain;
+  }
+
+  setRefreshCallback(callback) {
+    this.#refreshCallback = callback;
   }
 
   async get(endpoint, options = {}) {
@@ -12,6 +16,15 @@ export class Networker {
         method: 'GET',
         ...options,
       });
+
+      if (result.status === 401 && !endpoint.includes('/auth/refresh')) {
+        if (this.#refreshTokens() === true) {
+          return this.get(endpoint, options);
+        }
+        const error = new Error('Unauthorized');
+        error.status = 401;
+        throw error;
+      }
 
       if (result.status >= 400) {
         const error = new Error(
@@ -36,6 +49,20 @@ export class Networker {
         body: JSON.stringify(data),
         ...options,
       });
+
+      if (
+        result.status === 401 &&
+        !endpoint.includes('/auth/login') &&
+        !endpoint.includes('/auth/refresh')
+      ) {
+        if (this.#refreshTokens() === true) {
+          return this.post(endpoint, data, options);
+        }
+        const error = new Error('Unauthorized');
+        error.status = 401;
+        throw error;
+      }
+
       if (result.status >= 400) {
         const error = new Error(
           `HTTP: ${result.status}. Couldn't send data to the endpoint: ${endpoint}`,
@@ -45,8 +72,30 @@ export class Networker {
       }
       return result.json() || {};
     } catch (e) {
-      console.error(`Произошла ошибка:`, e.message);
+      console.error(`There is an error:`, e.message);
       return e;
+    }
+  }
+
+  async #refreshTokens() {
+    if (this.#refreshingTokens) {
+      await this.#refreshingTokens;
+      return true;
+    }
+
+    if (!this.#refreshCallback) {
+      throw new Error('Refresh callback not setted!');
+    }
+
+    this.#refreshingTokens = this.#refreshCallback();
+
+    try {
+      await this.#refreshingTokens;
+      return true;
+    } catch (error) {
+      return false;
+    } finally {
+      this.#refreshingTokens = null;
     }
   }
 }
