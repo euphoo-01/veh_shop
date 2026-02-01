@@ -9,10 +9,13 @@ export default {
   props: {
     error: {
       type: Object,
-      default: {
-        code: 0,
-        message: 'Unknown',
+      validator(value) {
+        if (!value.message || !value.status) {
+          return false;
+        }
+        return true;
       },
+      required: true,
     },
     onCleanup: {
       type: Function,

@@ -33,11 +33,14 @@ export default {
 
 .catalogue__item {
   padding: 16px;
-  transition: background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition:
+    background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
+    outline 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .catalogue__item:hover {
   background-color: color-mix(in srgb, var(--primary-color) 20%, transparent);
+  outline: 1px var(--primary-color) solid;
   cursor: pointer;
 }
 .item__image {
