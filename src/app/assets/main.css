@@ -18,7 +18,8 @@ button,
 input,
 select,
 option,
-label {
+label,
+span {
   font-family: Karla;
   color: var(--text-color);
 }

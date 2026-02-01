@@ -1,12 +1,17 @@
 <template>
   <section class="catalogue__list">
     <TransitionGroup name="list__animation_wrapper">
-      <div class="catalogue__item" v-for="vehicle in vehicles" :key="vehicle.id">
+      <div
+        class="catalogue__item"
+        v-for="vehicle in vehicles"
+        :key="vehicle.id"
+        @click="goToProductCard(vehicle.id)"
+      >
         <div class="item__container">
           <img class="item__image" :src="vehicle.thumbnail" :alt="`${vehicle.title} Image`" />
         </div>
 
-        <h2>{{ vehicle.title }}</h2>
+        <h2>{{ `${vehicle.brand} ${vehicle.title}` }}</h2>
         <h2>
           <b>{{ vehicle.price }} $</b>
         </h2>
@@ -18,6 +23,11 @@
 export default {
   props: {
     vehicles: Array,
+  },
+  methods: {
+    goToProductCard(id) {
+      this.$router.push({ name: 'product', params: { id } });
+    },
   },
 };
 </script>
@@ -36,6 +46,7 @@ export default {
   transition:
     background-color 0.2s cubic-bezier(0.075, 0.82, 0.165, 1),
     outline 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  max-width: 250px;
 }
 
 .catalogue__item:hover {

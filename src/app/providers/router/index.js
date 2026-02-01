@@ -5,6 +5,7 @@ import CartView from '@/pages/CartView.vue';
 import HomeView from '@/pages/HomeView/HomeView.vue';
 import LoginView from '@/pages/LoginView/LoginView.vue';
 import store from '../store';
+import ProductView from '@/pages/ProductView/ProductView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       name: 'catalogue',
       component: CatalogueView,
       meta: { loginRequired: false },
+    },
+    {
+      path: '/product/:id(\\d+)',
+      name: 'product',
+      component: ProductView,
     },
     {
       path: '/user/:username/cart',

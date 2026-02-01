@@ -18,14 +18,15 @@
       <ButtonUI @click="goToLogin" :id="currentRoute === 'login' ? 'active' : ''" secondary v-else>
         Login
       </ButtonUI>
-      <IconSVG
-        v-if="isAuthorized"
-        of="cart"
-        size="large"
-        :id="currentRoute === 'cart' ? 'active-icon' : ''"
-        @click="goToCart"
-        clickable
-      />
+      <div class="menu__cart_wrapper" v-if="isAuthorized" @click="goToCart">
+        <IconSVG
+          of="cart"
+          size="large"
+          :id="currentRoute === 'cart' ? 'active-icon' : ''"
+          clickable
+        />
+        <span v-if="cartItemCount > 0" class="menu__cart_badge">{{ cartItemCount }}</span>
+      </div>
     </nav>
   </menu>
 </template>
@@ -36,7 +37,11 @@ import IconSVG from '@/components/IconSVG.vue';
 export default {
   components: { ButtonUI, IconSVG },
   computed: {
-    ...mapGetters({ username: 'user/username', isAuthorized: 'user/isAuthorized' }),
+    ...mapGetters({
+      username: 'user/username',
+      isAuthorized: 'user/isAuthorized',
+      cartItemCount: 'cart/cartItemCount',
+    }),
     currentRoute() {
       return this.$route.name;
     },
@@ -71,6 +76,30 @@ export default {
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+}
+
+.menu__cart_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.menu__cart_badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: color-mix(in srgb, var(--error-color) 60%, red);
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  max-width: 12px;
+  max-height: 12px;
+  text-align: center;
+  line-height: 1;
+  pointer-events: none;
 }
 
 #active {

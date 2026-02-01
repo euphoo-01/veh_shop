@@ -4,7 +4,7 @@
       <div class="hero__content">
         <h1 class="hero__title">Find Your Dream Ride</h1>
         <p class="hero__subtitle">Explore our premium collection of vehicles and motorcycles.</p>
-        <ButtonUI primary @click="$router.push({ name: 'catalogue' })"> Shop Now </ButtonUI>
+        <ButtonUI primary @click="goToCatalogue"> Shop Now </ButtonUI>
       </div>
       <div class="hero__image_container">
         <img src="@/app/assets/home_banner.webp" alt="Home Banner" class="hero__image" />
@@ -14,7 +14,12 @@
     <section class="featured" v-if="featuredVehicles.length">
       <h2 class="featured__title">Featured Vehicles</h2>
       <div class="featured__grid">
-        <div v-for="vehicle in featuredVehicles" :key="vehicle.id" class="featured__card">
+        <div
+          v-for="vehicle in featuredVehicles"
+          :key="vehicle.id"
+          class="featured__card"
+          @click="goToProductCard(vehicle.id)"
+        >
           <div class="card__image_wrapper">
             <img :src="vehicle.thumbnail" :alt="vehicle.title" class="card__image" />
           </div>
@@ -25,7 +30,7 @@
         </div>
       </div>
       <div class="featured__action">
-        <ButtonUI secondary @click="$router.push({ name: 'catalogue' })"> View All </ButtonUI>
+        <ButtonUI secondary @click="goToCatalogue"> View All </ButtonUI>
       </div>
     </section>
 
@@ -57,7 +62,15 @@ export default {
       reviews: [],
     };
   },
-  async created() {
+  methods: {
+    goToProductCard(id) {
+      this.$router.push({ name: 'product', params: { id } });
+    },
+    goToCatalogue() {
+      this.$router.push({ name: 'catalogue' });
+    },
+  },
+  async mounted() {
     // не создавал новый модуль во vuex, т.к. посчитал это избыточным
     try {
       const vehiclesData = await getVehiclesPreview(networker, 3);
