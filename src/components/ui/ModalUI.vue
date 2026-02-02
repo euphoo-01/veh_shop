@@ -48,7 +48,7 @@ export default {
   align-items: center;
   align-self: center;
   margin: 0 auto;
-  width: 400px;
+  min-width: 250px;
   height: auto;
   border-bottom: 3px var(--secondary-color) solid;
   border-top: 3px var(--secondary-color) solid;

@@ -73,6 +73,6 @@ export default {
 .form__switcher .switcher__action,
 .form__switcher .switcher__description {
   display: inline-block;
-  margin: 8px;
+  margin-right: 8px;
 }
 </style>
