@@ -58,4 +58,10 @@ export default {
   justify-content: flex-start;
   gap: 16px;
 }
+@media (max-width: 768px) {
+  .catalogue__filters {
+    flex-flow: column;
+    align-items: flex-start;
+  }
+}
 </style>

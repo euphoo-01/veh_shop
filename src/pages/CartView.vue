@@ -33,7 +33,7 @@
             <button class="cart_item__remove" @click="removeItem(item.id)">Remove</button>
           </div>
 
-          <div class="cart_item__total">{{ (item.price * item.quantity).toFixed(2) }} $</div>
+          <p class="cart_item__total">{{ (item.price * item.quantity).toFixed(2) }} $</p>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
       </aside>
     </div>
 
-    <div v-else class="cart__empty">
+    <div v-else class="cart--empty">
       <IconSVG of="cart" size="extralarge" class="cart__empty_icon" />
       <p class="cart__empty_text">Your cart is empty</p>
       <ButtonUI primary @click="$router.push({ name: 'catalogue' })"> Go to Catalogue </ButtonUI>
@@ -258,7 +258,7 @@ export default {
   width: 100%;
 }
 
-.cart__empty {
+.cart--empty {
   display: flex;
   flex-direction: column;
   align-items: center;

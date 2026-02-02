@@ -50,6 +50,9 @@ export default {
 
 .clickable:hover svg * {
   fill: var(--primary-color);
+}
+
+.clickable {
   cursor: pointer;
 }
 

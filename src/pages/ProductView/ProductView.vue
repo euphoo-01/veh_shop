@@ -50,7 +50,12 @@
         </div>
 
         <div class="details__actions">
-          <ButtonUI primary @click="addToCart" :disabled="currentProduct.stock <= 0">
+          <ButtonUI
+            primary
+            @click="addToCart"
+            :disabled="currentProduct.stock <= 0"
+            class="details__actions_button"
+          >
             Add to Cart
           </ButtonUI>
         </div>
@@ -174,7 +179,13 @@ export default {
 .product {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
+}
+
+@media (min-width: 768px) {
+  .product {
+    padding: 24px;
+  }
 }
 
 .product__loader {
@@ -186,13 +197,14 @@ export default {
 .product__container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 24px;
 }
 
 @media (min-width: 768px) {
   .product__container {
     grid-template-columns: 1fr 1fr;
     align-items: start;
+    gap: 40px;
   }
 }
 
@@ -203,10 +215,9 @@ export default {
 }
 
 .gallery__main {
-  width: 100%;
+  width: auto;
   aspect-ratio: 4/3;
   background-color: var(--background-color);
-  border-radius: 8px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -226,13 +237,14 @@ export default {
   gap: 12px;
   overflow-x: auto;
   padding-bottom: 8px;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
 .gallery__thumbnail {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 4px;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 0.2s ease;
@@ -264,9 +276,16 @@ export default {
 
 .details__title {
   margin: 0;
-  font-size: 40px;
-  line-height: 1.1;
+  font-size: 28px;
+  line-height: 1.2;
   font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .details__title {
+    font-size: 40px;
+    line-height: 1.1;
+  }
 }
 
 .details__meta {
@@ -282,7 +301,6 @@ export default {
   background-color: #f1c40f;
   color: #fff;
   padding: 4px 8px;
-  border-radius: 4px;
   font-weight: bold;
 }
 
@@ -307,15 +325,20 @@ export default {
 
 .details__price {
   margin: 0;
-  font-size: 32px;
+  font-size: 24px;
   color: var(--primary-color);
+}
+
+@media (min-width: 768px) {
+  .details__price {
+    font-size: 32px;
+  }
 }
 
 .details__discount {
   background-color: var(--error-color);
   color: white;
   padding: 4px 8px;
-  border-radius: 4px;
   font-size: 15px;
   font-weight: bold;
 }
@@ -325,13 +348,22 @@ export default {
   color: var(--text-color);
 }
 
+.details__actions_button {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .details__actions_button {
+    width: fit-content;
+  }
+}
+
 .specs {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: 16px;
   background-color: color-mix(in srgb, var(--primary-color) 5%, transparent);
   padding: 20px;
-  border-radius: 8px;
 }
 
 .specs__item {
@@ -365,14 +397,13 @@ export default {
 .reviews__list {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .review {
   background: var(--background-color);
   border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
   padding: 20px;
-  border-radius: 8px;
 }
 
 .review__header {
