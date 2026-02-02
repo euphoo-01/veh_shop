@@ -8,9 +8,9 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import CatalogueList from './CatalogueList.vue';
+import CatalogueList from '@/modules/catalogue/components/CatalogueList.vue';
 import IconSVG from '@/components/IconSVG.vue';
-import CatalogueFilters from './CatalogueFilters.vue';
+import CatalogueFilters from '@/modules/catalogue/components/CatalogueFilters.vue';
 export default {
   components: { CatalogueList, IconSVG, CatalogueFilters },
   computed: {
