@@ -1,7 +1,7 @@
 export const settingsStoreModule = {
   namespaced: true,
   state: {
-    currentTheme: 'light',
+    currentTheme: 'dark',
   },
   mutations: {
     setTheme(state, value) {
@@ -12,10 +12,10 @@ export const settingsStoreModule = {
   actions: {
     initTheme({ commit }) {
       const saved = localStorage.getItem('currentTheme');
-      if (!saved) {
-        saved = 'light';
-      }
-      commit('setTheme', saved);
+      const validThemes = ['light', 'dark'];
+
+      const themeToSet = validThemes.includes(saved) ? saved : 'dark';
+      commit('setTheme', themeToSet);
     },
   },
   getters: {

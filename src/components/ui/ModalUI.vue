@@ -1,17 +1,18 @@
 <template>
   <Transition name="fade-bottom">
     <div class="form__backdrop" @click="hide" v-if="!static && isVisible">
-      <form class="form__content" @submit.prevent @click.stop>
+      <form class="form__content" @submit.prevent @click.stop v-bind="$attrs">
         <slot></slot>
       </form>
     </div>
   </Transition>
-  <form class="form__content" @submit.prevent v-if="static">
+  <form class="form__content" @submit.prevent v-if="static" v-bind="$attrs">
     <slot></slot>
   </form>
 </template>
 <script>
 export default {
+  inheritAttrs: false,
   props: {
     isVisible: {
       type: Boolean,

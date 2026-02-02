@@ -21,7 +21,12 @@
           @click="goToProductCard(vehicle.id)"
         >
           <div class="card__image_wrapper">
-            <img :src="vehicle.thumbnail" :alt="vehicle.title" class="card__image" />
+            <img
+              :src="vehicle.thumbnail"
+              :alt="vehicle.title"
+              class="card__image"
+              crossorigin="anonymous"
+            />
           </div>
           <h2 class="card__title">{{ vehicle.title }}</h2>
           <h2 class="card__price">

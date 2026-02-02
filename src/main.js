@@ -9,8 +9,6 @@ import { networker } from './services/api';
 const app = createApp(App);
 
 app.use(store);
-await store.dispatch('user/initSession');
-store.dispatch('settings/initTheme');
 app.use(router);
 
 networker.setRefreshCallback(async () => {

@@ -3,8 +3,6 @@
   <RouterView />
 </template>
 <script>
-// TODO: Главная страница
-// TODO: Корзина
 // TODO: Пагинация
 import TheHeader from './app/layout/TheHeader.vue';
 import { mapGetters } from 'vuex';
@@ -20,6 +18,11 @@ export default {
       },
       immediate: true,
     },
+  },
+  async created() {
+    await this.$store.dispatch('user/initSession');
+    this.$store.dispatch('cart/initCart');
+    this.$store.dispatch('settings/initTheme');
   },
 };
 </script>

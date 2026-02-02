@@ -5,7 +5,12 @@
       <div class="cart__list">
         <div v-for="item in cartItems" :key="item.id" class="cart__item cart_item">
           <div class="cart_item__image-container" @click="goToProduct(item.id)">
-            <img :src="item.thumbnail" :alt="item.title" class="cart_item__image" />
+            <img
+              :src="item.thumbnail"
+              :alt="item.title"
+              class="cart_item__image"
+              crossorigin="anonymous"
+            />
           </div>
 
           <div class="cart_item__info">

@@ -9,7 +9,12 @@
     <section v-else class="account__info">
       <div class="account__info info__column">
         <div class="account__info info__row">
-          <img class="account__image" :src="userData.image" :alt="`${userData.username} Avatar`" />
+          <img
+            class="account__image"
+            :src="userData.image"
+            :alt="`${userData.username} Avatar`"
+            crossorigin="anonymous"
+          />
           <div class="account__info info__column">
             <p><b>Firstname: </b>{{ userData.firstName }}</p>
             <p><b>Lastname: </b>{{ userData.lastName }}</p>
@@ -103,8 +108,9 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   gap: 0;
-  line-height: 0;
   margin-bottom: 16px;
+  line-height: 1;
+  min-width: fit-content;
 }
 .account__image {
   max-width: 250px;
@@ -115,8 +121,21 @@ export default {
   flex-flow: row wrap;
   gap: 16px;
   align-items: flex-start;
-  line-height: 0px;
   width: 100%;
+}
+.info__payment {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
+.info__payment p {
+  margin: 0;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+.info__icon {
+  flex-shrink: 0;
 }
 .account__spinner {
   margin: 64px auto;
@@ -133,5 +152,6 @@ export default {
   height: 100vh;
   padding: 16px;
   height: auto;
+  margin-left: 16px;
 }
 </style>

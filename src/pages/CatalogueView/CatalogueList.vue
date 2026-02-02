@@ -8,7 +8,12 @@
         @click="goToProductCard(vehicle.id)"
       >
         <div class="item__container">
-          <img class="item__image" :src="vehicle.thumbnail" :alt="`${vehicle.title} Image`" />
+          <img
+            class="item__image"
+            :src="vehicle.thumbnail"
+            :alt="`${vehicle.title} Image`"
+            crossorigin="anonymous"
+          />
         </div>
 
         <h2>{{ `${vehicle.brand} ${vehicle.title}` }}</h2>

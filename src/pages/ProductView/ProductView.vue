@@ -1,11 +1,20 @@
 <template>
   <main class="product">
+    <ModalUI :isVisible="isModalVisible" @switch-modal="switchModalVisible(false)"
+      ><h2>Success</h2>
+      <p>Product {{ currentProduct.title }} is succesfully added to shopping cart!</p></ModalUI
+    >
     <IconSVG v-if="isLoading" class="product__loader" of="spinner" size="extralarge" />
 
     <div v-else-if="currentProduct" class="product__container">
       <section class="product__gallery gallery">
         <div class="gallery__main">
-          <img :src="displayedImage" :alt="currentProduct.title" class="gallery__image" />
+          <img
+            :src="displayedImage"
+            :alt="currentProduct.title"
+            class="gallery__image"
+            crossorigin="anonymous"
+          />
         </div>
         <div class="gallery__list" v-if="currentProduct.images && currentProduct.images.length > 1">
           <img
@@ -16,6 +25,7 @@
             :class="{ 'gallery__thumbnail--active': img === displayedImage }"
             @click="selectedImage = img"
             :alt="`${currentProduct.title} view ${index + 1}`"
+            crossorigin="anonymous"
           />
         </div>
       </section>
@@ -123,18 +133,21 @@
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import IconSVG from '@/components/IconSVG.vue';
 import ButtonUI from '@/components/ui/ButtonUI.vue';
+import ModalUI from '@/components/ui/ModalUI.vue';
 
 export default {
-  components: { IconSVG, ButtonUI },
+  components: { IconSVG, ButtonUI, ModalUI },
   data() {
     return {
       selectedImage: null,
+      isModalVisible: false,
     };
   },
   computed: {
     ...mapGetters({
       currentProduct: 'vehicle/currentProductCard',
       isLoading: 'vehicle/isLoading',
+      isAuthorized: 'user/isAuthorized',
     }),
     displayedImage() {
       if (this.selectedImage) return this.selectedImage;
@@ -153,7 +166,12 @@ export default {
     ...mapActions({ fetchVehicle: 'vehicle/fetchVehicleById' }),
     ...mapMutations({ addItem: 'cart/addItem' }),
     addToCart() {
-      this.addItem(this.currentProduct);
+      if (this.isAuthorized) {
+        this.addItem(this.currentProduct);
+        this.switchModalVisible(true);
+      } else {
+        this.$router.push({ name: 'login' });
+      }
     },
     formatDate(dateString) {
       if (!dateString) return '';
@@ -162,6 +180,9 @@ export default {
         month: 'long',
         day: 'numeric',
       });
+    },
+    switchModalVisible(value) {
+      this.isModalVisible = value;
     },
   },
   watch: {
