@@ -7,7 +7,7 @@
   </main>
 </template>
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import CatalogueList from './CatalogueList.vue';
 import IconSVG from '@/components/IconSVG.vue';
 import CatalogueFilters from './CatalogueFilters.vue';

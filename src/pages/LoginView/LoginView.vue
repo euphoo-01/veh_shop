@@ -4,7 +4,7 @@
       <Transition name="fade-left"
         ><ErrorBubble v-if="error.status" :error="error" :onCleanup="clearError"
       /></Transition>
-      <ModalUI class="login__form" static v-if="isRegistering">
+      <ModalUI class="login__form" isStatic v-if="isRegistering">
         <h1 class="login__title">Sign Up</h1>
         <ErrorBubble
           :error="{
@@ -22,7 +22,7 @@
           <a class="switcher__action" @click="switchFormMode">Login</a></span
         >
       </ModalUI>
-      <ModalUI class="login__form" static v-else>
+      <ModalUI class="login__form" isStatic v-else>
         <h1 class="login__title">Sign In</h1>
         <InputUI placeholder="Your login:" v-model="user.login" />
         <InputUI placeholder="Your password:" v-model="user.password" type="password" />

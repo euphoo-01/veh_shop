@@ -1,12 +1,12 @@
 <template>
   <Transition name="fade-bottom">
-    <div class="form__backdrop" @click="hide" v-if="!static && isVisible">
+    <div class="form__backdrop" @click="hide" v-if="!isStatic && isVisible">
       <form class="form__content" @submit.prevent @click.stop v-bind="$attrs">
         <slot></slot>
       </form>
     </div>
   </Transition>
-  <form class="form__content" @submit.prevent v-if="static" v-bind="$attrs">
+  <form class="form__content" @submit.prevent v-if="isStatic" v-bind="$attrs">
     <slot></slot>
   </form>
 </template>
@@ -18,7 +18,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    static: {
+    isStatic: {
       type: Boolean,
       default: false,
     },

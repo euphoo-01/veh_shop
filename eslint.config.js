@@ -10,7 +10,7 @@ export default defineConfig([
     files: ['**/*.{vue,js,mjs,jsx}'],
   },
 
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.unlighthouse/**']),
 
   {
     languageOptions: {
@@ -24,13 +24,4 @@ export default defineConfig([
   ...pluginVue.configs['flat/essential'],
 
   prettier,
-
-  {
-    'vue/multi-word-component-names': [
-      'error',
-      {
-        ignores: [],
-      },
-    ],
-  },
 ]);

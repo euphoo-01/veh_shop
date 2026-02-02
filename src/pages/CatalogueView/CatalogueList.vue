@@ -13,6 +13,7 @@
             :src="vehicle.thumbnail"
             :alt="`${vehicle.title} Image`"
             crossorigin="anonymous"
+            fetchpriority="high"
           />
         </div>
 

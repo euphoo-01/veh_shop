@@ -92,7 +92,7 @@ export class Networker {
     try {
       await this.#refreshingTokens;
       return true;
-    } catch (error) {
+    } catch {
       return false;
     } finally {
       this.#refreshingTokens = null;

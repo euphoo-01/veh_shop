@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="header__container">
-      <img src="@/app/assets/logo.png" alt="Logo" class="header__logo" />
+      <img src="@/app/assets/logo.webp" alt="Logo" class="header__logo" />
       <h1>Veh Shop</h1>
     </div>
 

@@ -7,7 +7,7 @@
         <ButtonUI primary @click="goToCatalogue"> Shop Now </ButtonUI>
       </div>
       <div class="hero__image_container">
-        <img src="@/app/assets/home_banner.webp" alt="Home Banner" class="hero__image" />
+        <img src="@/app/assets/home_banner.webp" alt="Home Banner" class="hero__image" fetchpriority="high"/>
       </div>
     </section>
 
