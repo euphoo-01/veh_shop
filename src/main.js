@@ -4,7 +4,7 @@ import { createApp } from 'vue';
 import App from '@/App.vue';
 import router from '@/app/providers/router';
 import store from '@/app/providers/store';
-import { networker } from './services/api';
+import { networker } from '@/modules/shared/services/networker';
 
 const app = createApp(App);
 

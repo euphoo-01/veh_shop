@@ -99,3 +99,6 @@ export class Networker {
     }
   }
 }
+
+const domainURL = 'https://dummyjson.com';
+export const networker = new Networker(domainURL);

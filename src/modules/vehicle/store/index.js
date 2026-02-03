@@ -1,5 +1,9 @@
-import { getVehicleById, getVehiclesPreview, getMotorcyclesPreview } from '@/services/api/vehicles';
-import { networker } from '@/services/api';
+import {
+  getVehicleById,
+  getVehiclesPreview,
+  getMotorcyclesPreview,
+} from '@/modules/vehicle/services/api';
+import { networker } from '@/modules/shared/services/networker';
 export const vehicleStoreModule = {
   namespaced: true,
   state: () => ({

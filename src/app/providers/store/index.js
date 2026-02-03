@@ -1,8 +1,9 @@
 import { createStore } from 'vuex';
-import { vehicleStoreModule } from './modules/vehicleStore';
-import { userStoreModule } from './modules/userStore';
-import { cartStoreModule } from './modules/cartStore';
-import { settingsStoreModule } from './modules/settingsStore';
+import { vehicleStoreModule } from '@/modules/vehicle/store';
+import { userStoreModule } from '@/modules/user/store';
+import { cartStoreModule } from '@/modules/cart/store';
+import { settingsStoreModule } from '@/modules/settings/store';
+import { homeStoreModule } from '@/modules/home/store';
 
 const store = createStore({
   modules: {
@@ -10,6 +11,7 @@ const store = createStore({
     user: userStoreModule,
     cart: cartStoreModule,
     settings: settingsStoreModule,
+    home: homeStoreModule,
   },
 });
 

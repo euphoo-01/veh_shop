@@ -2,7 +2,7 @@
   <span v-html="svgCode" :class="{ icon: true, [`icon-${size}`]: true, clickable }"></span>
 </template>
 <script>
-import { checkIfIconNameExist, getSvgIconCode } from '@/services/icons/iconsHelper';
+import { checkIfIconNameExist, getSvgIconCode } from '@/modules/shared/services/iconsHelper';
 export default {
   props: {
     of: {
