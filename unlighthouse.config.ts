@@ -2,7 +2,7 @@ export default {
   site: 'https://veh-shop.vercel.app',
   scanner: {
     device: 'mobile',
-    skipRobotsTxt: true,
+    skipRobotsTxt: false,
     sitemap: false,
   },
   urls: ['/', '/catalogue', '/login'],

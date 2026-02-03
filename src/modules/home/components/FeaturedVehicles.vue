@@ -14,6 +14,7 @@
             :alt="vehicle.title"
             class="card__image"
             crossorigin="anonymous"
+            loading="lazy"
           />
         </div>
         <h2 class="card__title">{{ vehicle.title }}</h2>

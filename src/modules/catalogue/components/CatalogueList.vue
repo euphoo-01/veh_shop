@@ -3,7 +3,7 @@
     <TransitionGroup name="list__animation_wrapper">
       <div
         class="catalogue__item"
-        v-for="vehicle in vehicles"
+        v-for="(vehicle, index) in vehicles"
         :key="vehicle.id"
         @click="goToProductCard(vehicle.id)"
       >
@@ -13,7 +13,8 @@
             :src="vehicle.thumbnail"
             :alt="`${vehicle.title} Image`"
             crossorigin="anonymous"
-            fetchpriority="high"
+            :loading="index < 4 ? 'eager' : 'lazy'"
+            :fetchpriority="index < 4 ? 'high' : 'auto'"
           />
         </div>
 
