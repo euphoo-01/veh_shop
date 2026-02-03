@@ -17,7 +17,6 @@ export default {
 <style>
 header {
   display: flex;
-  align-items: row nowrap;
   width: 100%;
   justify-content: space-between;
   align-items: center;

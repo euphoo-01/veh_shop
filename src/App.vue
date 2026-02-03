@@ -1,4 +1,7 @@
 <template>
+  <Teleport to="head">
+    <meta name="description" :content="$route.meta.description || 'Veh Shop'" />
+  </Teleport>
   <TheHeader />
   <RouterView />
 </template>

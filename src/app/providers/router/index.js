@@ -14,36 +14,37 @@ const router = createRouter({
       path: '/user/:username',
       name: 'account',
       component: AccountView,
-      meta: { loginRequired: true },
+      meta: { loginRequired: true, description: 'User account page' },
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView,
-      meta: { loginRequired: false },
+      meta: { loginRequired: false, description: 'Login to your account' },
     },
     {
       path: '/catalogue',
       name: 'catalogue',
       component: CatalogueView,
-      meta: { loginRequired: false },
+      meta: { loginRequired: false, description: 'Browse our catalogue' },
     },
     {
       path: '/product/:id(\\d+)',
       name: 'product',
       component: ProductView,
+      meta: { description: 'Product details' },
     },
     {
       path: '/user/:username/cart',
       name: 'cart',
       component: CartView,
-      meta: { loginRequired: true },
+      meta: { loginRequired: true, description: 'Your shopping cart' },
     },
     {
       path: '/',
       name: 'home',
       component: HomeView,
-      meta: { loginRequired: false },
+      meta: { loginRequired: false, description: 'Welcome to Veh Shop' },
     },
   ],
 });
@@ -60,6 +61,7 @@ router.beforeEach(async (to, from, next) => {
     next({ name: 'login' });
     return;
   }
+
   next();
   return;
 });
