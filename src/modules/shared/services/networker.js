@@ -1,7 +1,7 @@
 export class Networker {
   #domain;
   #refreshCallback;
-  #refreshingTokens = null; // чтобы не было гонки
+  #refreshTokensPromise = null; // чтобы не было гонки
   constructor(domain) {
     this.#domain = domain;
   }
@@ -78,8 +78,8 @@ export class Networker {
   }
 
   async #refreshTokens() {
-    if (this.#refreshingTokens) {
-      await this.#refreshingTokens;
+    if (this.#refreshTokensPromise) {
+      await this.#refreshTokensPromise;
       return true;
     }
 
@@ -87,15 +87,15 @@ export class Networker {
       throw new Error('Refresh callback not setted!');
     }
 
-    this.#refreshingTokens = this.#refreshCallback();
+    this.#refreshTokensPromise = this.#refreshCallback();
 
     try {
-      await this.#refreshingTokens;
+      await this.#refreshTokensPromise;
       return true;
     } catch {
       return false;
     } finally {
-      this.#refreshingTokens = null;
+      this.#refreshTokensPromise = null;
     }
   }
 }

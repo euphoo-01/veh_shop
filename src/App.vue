@@ -1,9 +1,13 @@
 <template>
-  <Teleport to="head">
-    <meta name="description" :content="$route.meta.description || 'Veh Shop'" />
-  </Teleport>
-  <TheHeader />
-  <RouterView />
+  <v-app>
+    <Teleport to="head">
+      <meta name="description" :content="$route.meta.description || 'Veh Shop'" />
+    </Teleport>
+    <TheHeader />
+    <v-main>
+      <RouterView />
+    </v-main>
+  </v-app>
 </template>
 <script>
 // TODO: Пагинация

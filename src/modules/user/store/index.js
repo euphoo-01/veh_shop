@@ -1,6 +1,6 @@
 import { networker } from '@/modules/shared/services/networker';
 import { loginUser, getUserDataByToken, refreshAccessToken } from '@/modules/user/services/api';
-import router from '@/app/providers/router';
+import router from '@/app/config/router';
 export const userStoreModule = {
   namespaced: true,
   state: () => ({
