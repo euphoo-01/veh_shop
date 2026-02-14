@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import store from './store';
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: '/user/:username',
     name: 'account',
