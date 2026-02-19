@@ -1,14 +1,12 @@
-import { createStore } from 'vuex';
-import { vehicleStoreModule } from '@/modules/vehicle/store';
-import { userStoreModule } from '@/modules/user/store';
-import { cartStoreModule } from '@/modules/cart/store';
-import { settingsStoreModule } from '@/modules/settings/store';
-import { homeStoreModule } from '@/modules/home/store';
+import { createStore } from "vuex";
+import { vehicleStoreModule } from "@/modules/vehicle/store";
+import { cartStoreModule } from "@/modules/cart/store";
+import { settingsStoreModule } from "@/modules/settings/store";
+import { homeStoreModule } from "@/modules/home/store";
 
 const store = createStore({
   modules: {
     vehicle: vehicleStoreModule,
-    user: userStoreModule,
     cart: cartStoreModule,
     settings: settingsStoreModule,
     home: homeStoreModule,

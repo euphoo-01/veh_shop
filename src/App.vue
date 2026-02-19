@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <Teleport to="head">
-      <meta name="description" :content="$route.meta.description || 'Veh Shop'" />
+      <meta name="description" :content="$route.meta?.description || 'Veh Shop'" />
     </Teleport>
     <TheHeader />
     <v-main>
@@ -9,28 +9,17 @@
     </v-main>
   </v-app>
 </template>
-<script>
-// TODO: Пагинация
-import TheHeader from './app/layout/TheHeader.vue';
-import { mapGetters } from 'vuex';
-export default {
-  components: { TheHeader },
-  computed: {
-    ...mapGetters({ currentTheme: 'settings/currentTheme' }),
-  },
-  watch: {
-    currentTheme: {
-      handler(newTheme) {
-        document.documentElement.className = newTheme;
-      },
-      immediate: true,
-    },
-  },
-  async created() {
-    await this.$store.dispatch('user/initSession');
-    this.$store.dispatch('cart/initCart');
-    this.$store.dispatch('settings/initTheme');
-  },
-};
+<script setup lang="ts">
+import { onMounted } from "vue";
+import TheHeader from "./app/layout/TheHeader.vue";
+import store from "./app/config/store";
+import { useUserStore } from "./modules/user/store/userStore";
+
+const userStore = useUserStore();
+onMounted(() => {
+  store.dispatch("cart/initCart");
+  store.dispatch("settings/initTheme");
+  userStore.initSession();
+});
 </script>
 <style></style>

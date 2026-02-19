@@ -10,10 +10,11 @@
   </main>
 </template>
 <script>
-import ErrorBubble from '@/components/ErrorBubble.vue';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
-import LoginForm from '@/modules/auth/components/LoginForm.vue';
-import RegisterForm from '@/modules/auth/components/RegisterForm.vue';
+import ErrorBubble from "@/components/ErrorBubble.vue";
+import LoginForm from "@/modules/auth/components/LoginForm.vue";
+import RegisterForm from "@/modules/auth/components/RegisterForm.vue";
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "@/modules/user/store/userStore";
 
 export default {
   components: { ErrorBubble, LoginForm, RegisterForm },
@@ -23,14 +24,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions({ login: 'user/login' }),
-    ...mapMutations({ clearError: 'user/clearError' }),
+    ...mapActions(useUserStore, ["login", "clearError"]),
     switchFormMode() {
       this.isRegistering = !this.isRegistering;
     },
   },
   computed: {
-    ...mapGetters({ error: 'user/error' }),
+    ...mapState(useUserStore, ["error"]),
   },
 };
 </script>

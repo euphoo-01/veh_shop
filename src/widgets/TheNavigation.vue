@@ -85,41 +85,42 @@
   </menu>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-import ModalUI from '@/components/ui/ModalUI.vue';
-import ButtonUI from '@/components/ui/ButtonUI.vue';
-import IconSVG from '@/components/IconSVG.vue';
+import { mapGetters } from "vuex";
+import { useUserStore } from "@/modules/user/store/userStore";
+import { mapState } from "pinia";
+import ModalUI from "@/components/ui/ModalUI.vue";
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import IconSVG from "@/components/IconSVG.vue";
 export default {
   components: { ButtonUI, IconSVG, ModalUI },
   computed: {
     ...mapGetters({
-      username: 'user/username',
-      isAuthorized: 'user/isAuthorized',
-      cartItemCount: 'cart/cartItemCount',
+      cartItemCount: "cart/cartItemCount",
     }),
+    ...mapState(useUserStore, ["username", "isAuthorized"]),
     currentRoute() {
       return this.$route.name;
     },
   },
   methods: {
     goToHome() {
-      this.$router.push({ name: 'home' });
+      this.$router.push({ name: "home" });
       this.switchModal(false);
     },
     goToCatalogue() {
-      this.$router.push({ name: 'catalogue' });
+      this.$router.push({ name: "catalogue" });
       this.switchModal(false);
     },
     goToAccount() {
-      this.$router.push({ name: 'account', params: { username: this.username } });
+      this.$router.push({ name: "account", params: { username: this.username } });
       this.switchModal(false);
     },
     goToCart() {
-      this.$router.push({ name: 'cart', params: { username: this.username } });
+      this.$router.push({ name: "cart", params: { username: this.username } });
       this.switchModal(false);
     },
     goToLogin() {
-      this.$router.push({ name: 'login' });
+      this.$router.push({ name: "login" });
       this.switchModal(false);
     },
     switchModal(value) {

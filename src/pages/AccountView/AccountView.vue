@@ -13,25 +13,23 @@
   </main>
 </template>
 <script>
-import IconSVG from '@/components/IconSVG.vue';
-import ErrorBubble from '@/components/ErrorBubble.vue';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
-import AccountDetails from '@/modules/account/components/AccountDetails.vue';
-import AccountSettings from '@/modules/account/components/AccountSettings.vue';
+import IconSVG from "@/components/IconSVG.vue";
+import ErrorBubble from "@/components/ErrorBubble.vue";
+import AccountDetails from "@/modules/account/components/AccountDetails.vue";
+import AccountSettings from "@/modules/account/components/AccountSettings.vue";
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "@/modules/user/store/userStore";
 
 export default {
   components: { ErrorBubble, IconSVG, AccountDetails, AccountSettings },
   methods: {
-    ...mapActions({
-      getDetailedUserData: 'user/getDetailedUserData',
-    }),
-    ...mapMutations({ clearError: 'user/clearError' }),
+    ...mapActions(useUserStore, ["getDetailedUserData", "clearError"]),
   },
   computed: {
-    ...mapGetters({
-      error: 'user/error',
-      userData: 'user/userData',
-      isLoading: 'user/isLoading',
+    ...mapState(useUserStore, {
+      error: "error",
+      userData: "user",
+      isLoading: "isLoading",
     }),
   },
   async mounted() {

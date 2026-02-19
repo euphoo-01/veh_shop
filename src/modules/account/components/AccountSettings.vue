@@ -11,19 +11,21 @@
 </template>
 
 <script>
-import ButtonUI from '@/components/ui/ButtonUI.vue';
-import SelectUI from '@/components/ui/SelectUI.vue';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import SelectUI from "@/components/ui/SelectUI.vue";
+import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions as mapPiniaActions } from "pinia";
+import { useUserStore } from "@/modules/user/store/userStore";
 
 export default {
-  name: 'AccountSettings',
+  name: "AccountSettings",
   components: {
     ButtonUI,
     SelectUI,
   },
   computed: {
     ...mapGetters({
-      currentTheme: 'settings/currentTheme',
+      currentTheme: "settings/currentTheme",
     }),
     theme: {
       get() {
@@ -35,11 +37,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      logout: 'user/logout',
-    }),
+    ...mapPiniaActions(useUserStore, ["logout"]),
     ...mapMutations({
-      setTheme: 'settings/setTheme',
+      setTheme: "settings/setTheme",
     }),
   },
 };

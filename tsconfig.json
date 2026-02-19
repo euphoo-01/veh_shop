@@ -14,8 +14,15 @@
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "strictNullChecks": true,
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.d.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.d.ts",
+    "src/modules/shared/services/iconsHelper.js",
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json",
