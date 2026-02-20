@@ -7,21 +7,22 @@
   </main>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import CatalogueList from '@/modules/catalogue/components/CatalogueList.vue';
-import IconSVG from '@/components/IconSVG.vue';
-import CatalogueFilters from '@/modules/catalogue/components/CatalogueFilters.vue';
+import { mapState, mapActions } from "pinia";
+import { useVehicleStore } from "@/modules/vehicle/store";
+import CatalogueList from "@/modules/catalogue/components/CatalogueList.vue";
+import IconSVG from "@/components/IconSVG.vue";
+import CatalogueFilters from "@/modules/catalogue/components/CatalogueFilters.vue";
 export default {
   components: { CatalogueList, IconSVG, CatalogueFilters },
   computed: {
-    ...mapGetters({
-      allVehicles: 'vehicle/allVehicles',
-      filteredVehicles: 'vehicle/filteredVehicles',
-      isLoading: 'vehicle/isLoading',
+    ...mapState(useVehicleStore, {
+      allVehicles: "allVehicles",
+      filteredVehicles: "filteredVehicles",
+      isLoading: "isLoading",
     }),
   },
   methods: {
-    ...mapActions('vehicle', ['fetchVehicles']),
+    ...mapActions(useVehicleStore, ["fetchVehicles"]),
   },
   async mounted() {
     await this.fetchVehicles();

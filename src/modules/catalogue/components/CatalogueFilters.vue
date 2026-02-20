@@ -14,16 +14,14 @@
   </section>
 </template>
 <script>
-import { mapMutations, mapGetters } from 'vuex';
-import SelectUI from '@/components/ui/SelectUI.vue';
-import IconSVG from '@/components/IconSVG.vue';
+import { mapState, mapActions } from "pinia";
+import { useVehicleStore } from "@/modules/vehicle/store";
+import SelectUI from "@/components/ui/SelectUI.vue";
+import IconSVG from "@/components/IconSVG.vue";
 export default {
   components: { SelectUI, IconSVG },
   computed: {
-    ...mapGetters({
-      groupFilterGetter: 'vehicle/groupFilter',
-      priceFilterGetter: 'vehicle/priceFilter',
-    }),
+    ...mapState(useVehicleStore, ["groupFilter", "priceFilter"]),
     groupFilter: {
       get() {
         return this.groupFilterGetter;
@@ -42,9 +40,9 @@ export default {
     },
   },
   methods: {
-    ...mapMutations({
-      mutateGroupFilter: 'vehicle/setGroupFilter',
-      mutatePriceFilter: 'vehicle/setPriceFilter',
+    ...mapActions(useVehicleStore, {
+      mutateGroupFilter: "setGroupFilter",
+      mutatePriceFilter: "setPriceFilter",
     }),
   },
 };

@@ -86,7 +86,7 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-import { useUserStore } from "@/modules/user/store/userStore";
+import { useUserStore } from "@/modules/user/store";
 import { mapState } from "pinia";
 import ModalUI from "@/components/ui/ModalUI.vue";
 import ButtonUI from "@/components/ui/ButtonUI.vue";

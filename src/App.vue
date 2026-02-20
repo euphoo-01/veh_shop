@@ -13,7 +13,7 @@
 import { onMounted } from "vue";
 import TheHeader from "./app/layout/TheHeader.vue";
 import store from "./app/config/store";
-import { useUserStore } from "./modules/user/store/userStore";
+import { useUserStore } from "./modules/user/store";
 
 const userStore = useUserStore();
 onMounted(() => {

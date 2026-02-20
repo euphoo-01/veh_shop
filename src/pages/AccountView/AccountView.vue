@@ -18,7 +18,7 @@ import ErrorBubble from "@/components/ErrorBubble.vue";
 import AccountDetails from "@/modules/account/components/AccountDetails.vue";
 import AccountSettings from "@/modules/account/components/AccountSettings.vue";
 import { mapState, mapActions } from "pinia";
-import { useUserStore } from "@/modules/user/store/userStore";
+import { useUserStore } from "@/modules/user/store";
 
 export default {
   components: { ErrorBubble, IconSVG, AccountDetails, AccountSettings },

@@ -13,9 +13,9 @@
 <script>
 import ButtonUI from "@/components/ui/ButtonUI.vue";
 import SelectUI from "@/components/ui/SelectUI.vue";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { mapActions as mapPiniaActions } from "pinia";
-import { useUserStore } from "@/modules/user/store/userStore";
+import { useUserStore } from "@/modules/user/store";
 
 export default {
   name: "AccountSettings",

@@ -2,25 +2,27 @@
   <main class="product">
     <ModalUI :isVisible="isModalVisible" @switch-modal="switchModalVisible(false)"
       ><h2>Success</h2>
-      <p>Product {{ currentProduct.title }} is succesfully added to shopping cart!</p></ModalUI
+      <p>Product {{ productDetails.title }} is succesfully added to shopping cart!</p></ModalUI
     >
     <IconSVG v-if="isLoading" class="product__loader" of="spinner" size="extralarge" />
 
-    <div v-else-if="currentProduct" class="product__container">
-      <ProductGallery :product="currentProduct" />
-      <ProductDetails :product="currentProduct" @add-to-cart="addToCart" />
-      <ProductReviews :reviews="currentProduct.reviews" />
+    <div v-else-if="productDetails" class="product__container">
+      <ProductGallery :product="productDetails" />
+      <ProductDetails :product="productDetails" @add-to-cart="addToCart" />
+      <ProductReviews :reviews="productDetails.reviews" />
     </div>
   </main>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from 'vuex';
-import IconSVG from '@/components/IconSVG.vue';
-import ModalUI from '@/components/ui/ModalUI.vue';
-import ProductGallery from '@/modules/product/components/ProductGallery.vue';
-import ProductDetails from '@/modules/product/components/ProductDetails.vue';
-import ProductReviews from '@/modules/product/components/ProductReviews.vue';
+import { mapState, mapActions } from "pinia";
+import { mapMutations } from "vuex";
+import { useVehicleStore } from "@/modules/vehicle/store";
+import IconSVG from "@/components/IconSVG.vue";
+import ModalUI from "@/components/ui/ModalUI.vue";
+import ProductGallery from "@/modules/product/components/ProductGallery.vue";
+import ProductDetails from "@/modules/product/components/ProductDetails.vue";
+import ProductReviews from "@/modules/product/components/ProductReviews.vue";
 
 export default {
   components: {
@@ -36,21 +38,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      currentProduct: 'vehicle/currentProductCard',
-      isLoading: 'vehicle/isLoading',
-      isAuthorized: 'user/isAuthorized',
-    }),
+    ...mapState(useVehicleStore, ["productDetails"]),
   },
   methods: {
-    ...mapActions({ fetchVehicle: 'vehicle/fetchVehicleById' }),
-    ...mapMutations({ addItem: 'cart/addItem' }),
+    ...mapActions(useVehicleStore, ["fetchVehicleById"]),
+    ...mapMutations({ addItem: "cart/addItem" }),
     addToCart() {
       if (this.isAuthorized) {
         this.addItem(this.currentProduct);
         this.switchModalVisible(true);
       } else {
-        this.$router.push({ name: 'login' });
+        this.$router.push({ name: "login" });
       }
     },
     switchModalVisible(value) {
@@ -58,7 +56,7 @@ export default {
     },
   },
   async mounted() {
-    await this.fetchVehicle(this.$route.params.id);
+    await this.fetchVehicleById(this.$route.params.id);
   },
 };
 </script>

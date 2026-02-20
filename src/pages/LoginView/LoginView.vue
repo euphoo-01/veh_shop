@@ -14,7 +14,7 @@ import ErrorBubble from "@/components/ErrorBubble.vue";
 import LoginForm from "@/modules/auth/components/LoginForm.vue";
 import RegisterForm from "@/modules/auth/components/RegisterForm.vue";
 import { mapState, mapActions } from "pinia";
-import { useUserStore } from "@/modules/user/store/userStore";
+import { useUserStore } from "@/modules/user/store";
 
 export default {
   components: { ErrorBubble, LoginForm, RegisterForm },
