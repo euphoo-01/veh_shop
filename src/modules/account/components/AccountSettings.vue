@@ -13,9 +13,9 @@
 <script>
 import ButtonUI from "@/components/ui/ButtonUI.vue";
 import SelectUI from "@/components/ui/SelectUI.vue";
-import { mapGetters, mapMutations } from "vuex";
-import { mapActions as mapPiniaActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useUserStore } from "@/modules/user/store";
+import { useSettingsStore } from "@/modules/settings/store";
 
 export default {
   name: "AccountSettings",
@@ -24,9 +24,7 @@ export default {
     SelectUI,
   },
   computed: {
-    ...mapGetters({
-      currentTheme: "settings/currentTheme",
-    }),
+    ...mapState(useSettingsStore, ["currentTheme"]),
     theme: {
       get() {
         return this.currentTheme;
@@ -37,10 +35,8 @@ export default {
     },
   },
   methods: {
-    ...mapPiniaActions(useUserStore, ["logout"]),
-    ...mapMutations({
-      setTheme: "settings/setTheme",
-    }),
+    ...mapActions(useUserStore, ["logout"]),
+    ...mapActions(useSettingsStore, ["setTheme"]),
   },
 };
 </script>

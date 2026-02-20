@@ -39,9 +39,9 @@ export interface Review {
   reviewerEmail: `${string}@${string}.${string}`;
 }
 
-export type ProductsAPIResponse<T> =
+export type ProductsAPIResponse<T extends Product | ProductPreview<Product>> =
   | {
-      products: [];
+      products: T[];
       limit: number;
       total: number;
       skip: number;
