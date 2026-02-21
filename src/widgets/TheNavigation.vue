@@ -1,142 +1,62 @@
 <template>
   <menu class="menu">
-    <nav class="menu__content">
-      <ButtonUI
-        @click="goToHome"
-        :id="currentRoute === 'home' ? 'menu__button--active' : ''"
-        secondary
-        >Home</ButtonUI
-      >
-      <ButtonUI
-        @click="goToCatalogue"
-        :id="currentRoute === 'catalogue' ? 'menu__button--active' : ''"
-        secondary
-        >Catalogue</ButtonUI
-      >
-      <ButtonUI
-        @click="goToAccount"
-        :id="currentRoute === 'account' ? 'menu__button--active' : ''"
-        secondary
-        v-if="isAuthorized"
-      >
-        Account
-      </ButtonUI>
-      <ButtonUI
-        @click="goToLogin"
-        :id="currentRoute === 'login' ? 'menu__button--active' : ''"
-        secondary
-        v-else
-      >
-        Login
-      </ButtonUI>
-      <div class="menu__cart_wrapper" v-if="isAuthorized" @click="goToCart">
-        <IconSVG
-          of="cart"
-          size="large"
-          :id="currentRoute === 'cart' ? 'active-icon' : ''"
-          clickable
-        />
-        <span v-if="totalProducts > 0" class="menu__cart_badge">{{
-          totalProducts > 9 ? "9+" : totalProducts
-        }}</span>
-      </div>
-    </nav>
+    <NavigationMenu :username :is-authorized :total-products />
   </menu>
   <menu class="menu--mobile">
     <ModalUI @switch-modal="switchModal(false)" :is-visible="isBurgerVisible">
       <div class="menu__buttons--mobile">
-        <nav class="menu__content">
-          <ButtonUI @click="goToHome" :id="currentRoute === 'home' ? 'active' : ''" secondary
-            >Home</ButtonUI
-          >
-          <ButtonUI
-            @click="goToCatalogue"
-            :id="currentRoute === 'catalogue' ? 'active' : ''"
-            secondary
-            >Catalogue</ButtonUI
-          >
-          <ButtonUI
-            @click="goToAccount"
-            :id="currentRoute === 'account' ? 'active' : ''"
-            secondary
-            v-if="isAuthorized"
-          >
-            Account
-          </ButtonUI>
-          <ButtonUI
-            @click="goToLogin"
-            :id="currentRoute === 'login' ? 'active' : ''"
-            secondary
-            v-else
-          >
-            Login
-          </ButtonUI>
-        </nav>
+        <NavigationMenu :username :is-authorized :total-products is-mobile />
       </div>
     </ModalUI>
     <IconSVG of="menu" size="large" clickable @click="switchModal(true)" />
-    <div class="menu__cart_wrapper--mobile" v-if="isAuthorized" @click="goToCart">
-      <IconSVG
-        of="cart"
-        size="large"
-        :id="currentRoute === 'cart' ? 'cart_icon--active' : ''"
-        clickable
-      />
-      <span v-if="totalProducts > 0" class="menu__cart_badge">{{ totalProducts }}</span>
-    </div>
+    <RouterLink
+      :to="{ name: 'cart', params: { username } }"
+      class="menu__cart_wrapper"
+      active-class="menu__icon--active"
+      v-if="isAuthorized"
+    >
+      <IconSVG of="cart" size="large" clickable />
+      <span v-if="totalProducts > 0" class="menu__cart_badge">{{
+        totalProducts > 9 ? "9+" : totalProducts
+      }}</span>
+    </RouterLink>
   </menu>
 </template>
-<script>
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useUserStore } from "@/modules/user/store";
 import { useCartStore } from "@/modules/cart/store";
-import { mapState } from "pinia";
 import ModalUI from "@/components/ui/ModalUI.vue";
-import ButtonUI from "@/components/ui/ButtonUI.vue";
 import IconSVG from "@/components/IconSVG.vue";
-export default {
-  components: { ButtonUI, IconSVG, ModalUI },
-  computed: {
-    ...mapState(useCartStore, ["totalProducts"]),
-    ...mapState(useUserStore, ["username", "isAuthorized"]),
-    currentRoute() {
-      return this.$route.name;
-    },
-  },
-  methods: {
-    goToHome() {
-      this.$router.push({ name: "home" });
-      this.switchModal(false);
-    },
-    goToCatalogue() {
-      this.$router.push({ name: "catalogue" });
-      this.switchModal(false);
-    },
-    goToAccount() {
-      this.$router.push({ name: "account", params: { username: this.username } });
-      this.switchModal(false);
-    },
-    goToCart() {
-      this.$router.push({ name: "cart", params: { username: this.username } });
-      this.switchModal(false);
-    },
-    goToLogin() {
-      this.$router.push({ name: "login" });
-      this.switchModal(false);
-    },
-    switchModal(value) {
-      this.isBurgerVisible = value;
-    },
-  },
-  data() {
-    return {
-      isBurgerVisible: false,
-    };
-  },
-};
+import { useRoute } from "vue-router";
+import { computed, ref } from "vue";
+import NavigationMenu from "@/modules/navigation/components/NavigationMenu.vue";
+const userStore = useUserStore();
+const cartStore = useCartStore();
+const route = useRoute();
+
+const { username, isAuthorized } = storeToRefs(userStore);
+const { totalProducts } = cartStore;
+
+const isBurgerVisible = ref<boolean>(false);
+
+const currentRoute = computed(() => {
+  return route.name;
+});
+
+function switchModal(value: boolean) {
+  isBurgerVisible.value = value;
+}
 </script>
 <style>
 .menu {
   display: inline-block;
+}
+
+.menu--mobile {
+  display: none;
+  flex-flow: row nowrap;
+  gap: 16px;
 }
 
 .menu__content {
@@ -171,11 +91,11 @@ export default {
   pointer-events: none;
 }
 
-#menu__button--active {
+.menu__button--active .button {
   border-bottom: 3px var(--primary-color) solid;
 }
 
-#cart_icon--active svg * {
+.menu__icon--active svg * {
   fill: var(--primary-color);
 }
 
@@ -196,11 +116,6 @@ export default {
   flex-flow: column;
   justify-content: center;
   align-items: center;
-  gap: 16px;
-}
-.menu--mobile {
-  display: none;
-  flex-flow: row nowrap;
   gap: 16px;
 }
 
