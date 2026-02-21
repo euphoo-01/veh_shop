@@ -11,14 +11,15 @@ import { defineStore } from "pinia";
 import { getMotorcyclesPreview, getVehicleById, getVehiclesPreview } from "../services/api";
 import { networker, NetworkError } from "@/modules/shared/services/networker";
 import { isNotNetworkError } from "@/modules/shared/utils";
+
 export const useVehicleStore = defineStore("vehicle", () => {
   const cars = ref<ProductPreview<Car>[]>();
   const motorcycles = ref<ProductPreview<Motorcycle>[]>();
   const productDetails = ref<Product>();
 
   const isLoading = ref<boolean>(false);
-  const groupFilter = ref<GroupFilter>();
-  const priceFilter = ref<PriceFilter>();
+  const groupFilter = ref<GroupFilter | "">();
+  const priceFilter = ref<PriceFilter | "">();
 
   const error = ref<NetworkError>();
 
@@ -89,7 +90,6 @@ export const useVehicleStore = defineStore("vehicle", () => {
           break;
         default:
           result = allVehicles.value;
-          break;
       }
       switch (priceFilter.value) {
         case "asc":

@@ -7,10 +7,11 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import HeroSection from '@/modules/home/components/HeroSection.vue';
-import FeaturedVehicles from '@/modules/home/components/FeaturedVehicles.vue';
-import CustomerReviews from '@/modules/home/components/CustomerReviews.vue';
+import { mapState, mapActions } from "pinia";
+import { useHomeStore } from "@/modules/home/store";
+import HeroSection from "@/modules/home/components/HeroSection.vue";
+import FeaturedVehicles from "@/modules/home/components/FeaturedVehicles.vue";
+import CustomerReviews from "@/modules/home/components/CustomerReviews.vue";
 
 export default {
   components: {
@@ -19,10 +20,10 @@ export default {
     CustomerReviews,
   },
   computed: {
-    ...mapGetters('home', ['featuredVehicles', 'reviews', 'isLoading']),
+    ...mapState(useHomeStore, ["featuredVehicles", "reviews", "isLoading"]),
   },
   methods: {
-    ...mapActions('home', ['fetchHomeData']),
+    ...mapActions(useHomeStore, ["fetchHomeData"]),
   },
   async mounted() {
     await this.fetchHomeData();
