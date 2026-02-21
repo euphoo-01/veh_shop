@@ -55,6 +55,10 @@ export const useUserStore = defineStore("user", () => {
     error.value = { status, message };
   }
 
+  function clearError() {
+    error.value = { message: null, status: null };
+  }
+
   async function logout() {
     clearSession();
     await router.push({ name: "login" });
@@ -134,6 +138,8 @@ export const useUserStore = defineStore("user", () => {
     isAuthorized,
     isLoading,
     error,
+    clearError,
+    setError,
     username,
     userData,
     login,

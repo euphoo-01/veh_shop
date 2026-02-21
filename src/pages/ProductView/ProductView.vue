@@ -1,12 +1,16 @@
 <template>
   <main class="product">
-    <ModalUI :isVisible="isModalVisible" @switch-modal="switchModalVisible(false)"
-      ><h2>Success</h2>
-      <p>Product {{ productDetails.title }} is succesfully added to shopping cart!</p></ModalUI
-    >
     <IconSVG v-if="isLoading" class="product__loader" of="spinner" size="extralarge" />
 
     <div v-else-if="productDetails" class="product__container">
+      <ModalUI :isVisible="isSuccessFormVisible" @switch-modal="switchSuccessModalVisible(false)"
+        ><h2>Success</h2>
+        <p>Product {{ productDetails.title }} is succesfully added to shopping cart!</p></ModalUI
+      >
+      <ModalUI :isVisible="isErrorFormVisible" @switch-modal="switchErrorModalVisible(false)"
+        ><h2>Error</h2>
+        <p>Product not added to the cart!</p></ModalUI
+      >
       <ProductGallery :product="productDetails" />
       <ProductDetails :product="productDetails" @add-to-cart="addToCart" />
       <ProductReviews :reviews="productDetails.reviews" />
@@ -14,8 +18,7 @@
   </main>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
 import { useVehicleStore } from "@/modules/vehicle/store";
 import { useCartStore } from "@/modules/cart/store";
 import { useUserStore } from "@/modules/user/store";
@@ -24,43 +27,47 @@ import ModalUI from "@/components/ui/ModalUI.vue";
 import ProductGallery from "@/modules/product/components/ProductGallery.vue";
 import ProductDetails from "@/modules/product/components/ProductDetails.vue";
 import ProductReviews from "@/modules/product/components/ProductReviews.vue";
+import { onMounted, ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useRouter, useRoute } from "vue-router";
+import type { Car } from "@/modules/vehicle/types";
 
-export default {
-  components: {
-    IconSVG,
-    ModalUI,
-    ProductGallery,
-    ProductDetails,
-    ProductReviews,
-  },
-  data() {
-    return {
-      isModalVisible: false,
-    };
-  },
-  computed: {
-    ...mapState(useVehicleStore, ["productDetails"]),
-    ...mapState(useUserStore, ["isAuthorized"]),
-  },
-  methods: {
-    ...mapActions(useVehicleStore, ["fetchVehicleById"]),
-    ...mapActions(useCartStore, ["addItem"]),
-    addToCart() {
-      if (this.isAuthorized) {
-        this.addItem(this.productDetails);
-        this.switchModalVisible(true);
-      } else {
-        this.$router.push({ name: "login" });
-      }
-    },
-    switchModalVisible(value) {
-      this.isModalVisible = value;
-    },
-  },
-  async mounted() {
-    await this.fetchVehicleById(this.$route.params.id);
-  },
-};
+const vehicleStore = useVehicleStore();
+const cartStore = useCartStore();
+const userStore = useUserStore();
+const router = useRouter();
+const route = useRoute();
+
+const { productDetails, isLoading } = storeToRefs(vehicleStore);
+const { isAuthorized } = storeToRefs(userStore);
+const isSuccessFormVisible = ref<boolean>(false);
+const isErrorFormVisible = ref<boolean>(false);
+
+function addToCart() {
+  if (isAuthorized && productDetails.value) {
+    cartStore.addItem(productDetails.value);
+    switchSuccessModalVisible(true);
+  } else if (isAuthorized && !productDetails.value) {
+    switchErrorModalVisible(true);
+  } else {
+    router.push({ name: "login" });
+  }
+}
+
+function switchSuccessModalVisible(value: boolean) {
+  isSuccessFormVisible.value = value;
+}
+
+function switchErrorModalVisible(value: boolean) {
+  isErrorFormVisible.value = value;
+}
+
+onMounted(async () => {
+  const vehId = route.params.id as Car["id"] | undefined;
+  if (vehId) {
+    await vehicleStore.fetchVehicleById(vehId);
+  }
+});
 </script>
 
 <style scoped>

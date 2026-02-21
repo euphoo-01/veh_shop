@@ -6,28 +6,21 @@
     <CatalogueList v-else :vehicles="filteredVehicles" />
   </main>
 </template>
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useVehicleStore } from "@/modules/vehicle/store";
 import CatalogueList from "@/modules/catalogue/components/CatalogueList.vue";
 import IconSVG from "@/components/IconSVG.vue";
 import CatalogueFilters from "@/modules/catalogue/components/CatalogueFilters.vue";
-export default {
-  components: { CatalogueList, IconSVG, CatalogueFilters },
-  computed: {
-    ...mapState(useVehicleStore, {
-      allVehicles: "allVehicles",
-      filteredVehicles: "filteredVehicles",
-      isLoading: "isLoading",
-    }),
-  },
-  methods: {
-    ...mapActions(useVehicleStore, ["fetchVehicles"]),
-  },
-  async mounted() {
-    await this.fetchVehicles();
-  },
-};
+import { onMounted } from "vue";
+
+const vehicleStore = useVehicleStore();
+
+const { filteredVehicles, isLoading } = storeToRefs(vehicleStore);
+
+onMounted(async () => {
+  await vehicleStore.fetchVehicles();
+});
 </script>
 <style>
 .catalogue__spinner {

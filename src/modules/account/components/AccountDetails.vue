@@ -3,36 +3,36 @@
     <div class="account__info info__row">
       <img
         class="account__image"
-        :src="userData?.image"
-        :alt="`${userData?.username} Avatar`"
+        :src="user?.image"
+        :alt="`${user?.username} Avatar`"
         crossorigin="anonymous"
       />
       <div class="account__info info__column">
-        <p><b>Firstname: </b>{{ userData?.firstName }}</p>
-        <p><b>Lastname: </b>{{ userData?.lastName }}</p>
-        <p><b>Gender: </b>{{ userData?.gender }}</p>
+        <p><b>Firstname: </b>{{ user?.firstName }}</p>
+        <p><b>Lastname: </b>{{ user?.lastName }}</p>
+        <p><b>Gender: </b>{{ user?.gender }}</p>
       </div>
     </div>
     <div class="account__info info__row">
       <div class="account__info info__column">
         <h3>Address</h3>
-        <p><b>Full Address: </b> {{ userData?.address?.address }}</p>
-        <p><b>City: </b> {{ userData?.address?.city }}</p>
-        <p><b>State: </b> {{ userData?.address?.state }}</p>
-        <p><b>Postal: </b> {{ userData?.address?.postalCode }}</p>
+        <p><b>Full Address: </b> {{ user?.address?.address }}</p>
+        <p><b>City: </b> {{ user?.address?.city }}</p>
+        <p><b>State: </b> {{ user?.address?.state }}</p>
+        <p><b>Postal: </b> {{ user?.address?.postalCode }}</p>
       </div>
       <div class="account__info info__column">
         <h3>Payment Methods</h3>
         <div class="info__payment info__row">
           <IconSVG class="info__icon" of="card" size="large" />
-          <p v-if="userData?.bank">
-            {{ `**** **** **** ${userData.bank.cardNumber.slice(-4)}` }}
+          <p v-if="user?.bank">
+            {{ `**** **** **** ${user.bank.cardNumber.slice(-4)}` }}
           </p>
         </div>
         <div class="info__payment info__row">
           <IconSVG class="info__icon" of="bitcoin" size="large" />
-          <p v-if="userData?.crypto">
-            {{ userData.crypto.wallet }}
+          <p v-if="user?.crypto">
+            {{ user.crypto.wallet }}
           </p>
         </div>
       </div>
@@ -49,7 +49,7 @@ export default {
     IconSVG,
   },
   props: {
-    userData: {
+    user: {
       type: Object,
       required: true,
     },

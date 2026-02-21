@@ -6,29 +6,21 @@
   </main>
 </template>
 
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useHomeStore } from "@/modules/home/store";
 import HeroSection from "@/modules/home/components/HeroSection.vue";
 import FeaturedVehicles from "@/modules/home/components/FeaturedVehicles.vue";
 import CustomerReviews from "@/modules/home/components/CustomerReviews.vue";
+import { onMounted } from "vue";
 
-export default {
-  components: {
-    HeroSection,
-    FeaturedVehicles,
-    CustomerReviews,
-  },
-  computed: {
-    ...mapState(useHomeStore, ["featuredVehicles", "reviews", "isLoading"]),
-  },
-  methods: {
-    ...mapActions(useHomeStore, ["fetchHomeData"]),
-  },
-  async mounted() {
-    await this.fetchHomeData();
-  },
-};
+const homeStore = useHomeStore();
+
+const { featuredVehicles, reviews, isLoading } = storeToRefs(homeStore);
+
+onMounted(async () => {
+  await homeStore.fetchHomeData();
+});
 </script>
 
 <style scoped>
