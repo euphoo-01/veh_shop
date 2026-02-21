@@ -36,7 +36,9 @@
           :id="currentRoute === 'cart' ? 'active-icon' : ''"
           clickable
         />
-        <span v-if="cartItemCount > 0" class="menu__cart_badge">{{ cartItemCount }}</span>
+        <span v-if="totalProducts > 0" class="menu__cart_badge">{{
+          totalProducts > 9 ? "9+" : totalProducts
+        }}</span>
       </div>
     </nav>
   </menu>
@@ -80,13 +82,13 @@
         :id="currentRoute === 'cart' ? 'cart_icon--active' : ''"
         clickable
       />
-      <span v-if="cartItemCount > 0" class="menu__cart_badge">{{ cartItemCount }}</span>
+      <span v-if="totalProducts > 0" class="menu__cart_badge">{{ totalProducts }}</span>
     </div>
   </menu>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import { useUserStore } from "@/modules/user/store";
+import { useCartStore } from "@/modules/cart/store";
 import { mapState } from "pinia";
 import ModalUI from "@/components/ui/ModalUI.vue";
 import ButtonUI from "@/components/ui/ButtonUI.vue";
@@ -94,9 +96,7 @@ import IconSVG from "@/components/IconSVG.vue";
 export default {
   components: { ButtonUI, IconSVG, ModalUI },
   computed: {
-    ...mapGetters({
-      cartItemCount: "cart/cartItemCount",
-    }),
+    ...mapState(useCartStore, ["totalProducts"]),
     ...mapState(useUserStore, ["username", "isAuthorized"]),
     currentRoute() {
       return this.$route.name;
@@ -161,7 +161,7 @@ export default {
   background-color: color-mix(in srgb, var(--error-color) 60%, red);
   color: white;
   border-radius: 50%;
-  padding: 2px 6px;
+  padding: 0px 2px;
   font-size: 12px;
   font-weight: bold;
   max-width: 12px;

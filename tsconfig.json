@@ -22,10 +22,7 @@
     "src/**/*.vue",
     "src/**/*.d.ts",
     "src/modules/shared/services/iconsHelper.js",
-  ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json",
-    },
+    "vite.config.ts",
+    "eslint.config.js",
   ],
 }

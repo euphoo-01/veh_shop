@@ -1,8 +1,8 @@
 <template>
   <h1 class="cart__title">Shopping Cart</h1>
   <main class="cart">
-    <div v-if="cartItems.length > 0" class="cart__container">
-      <CartList :items="cartItems" />
+    <div v-if="cartStore.totalItems > 0" class="cart__container">
+      <CartList :items="cartStore.cartItems" />
       <CartSummary />
     </div>
 
@@ -10,22 +10,13 @@
   </main>
 </template>
 
-<script>
-import { mapGetters } from 'vuex';
-import CartList from '@/modules/cart/components/CartList.vue';
-import CartSummary from '@/modules/cart/components/CartSummary.vue';
-import EmptyCart from '@/modules/cart/components/EmptyCart.vue';
+<script setup lang="ts">
+import { useCartStore } from "@/modules/cart/store";
+import CartList from "@/modules/cart/components/CartList.vue";
+import CartSummary from "@/modules/cart/components/CartSummary.vue";
+import EmptyCart from "@/modules/cart/components/EmptyCart.vue";
 
-export default {
-  components: {
-    CartList,
-    CartSummary,
-    EmptyCart,
-  },
-  computed: {
-    ...mapGetters('cart', ['cartItems']),
-  },
-};
+const cartStore = useCartStore();
 </script>
 
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
   <Teleport to="head">
-    <meta name="description" :content="$route.meta?.description || 'Veh Shop'" />
+    <meta name="description" :content="pageDescription" />
   </Teleport>
   <TheHeader />
   <main>
@@ -8,14 +8,17 @@
   </main>
 </template>
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { computed, onMounted, watch } from "vue";
 import TheHeader from "./app/layout/TheHeader.vue";
-import store from "./app/config/store";
 import { useUserStore } from "./modules/user/store";
 import { useSettingsStore } from "./modules/settings/store";
+import { useCartStore } from "./modules/cart/store";
+import { useRoute } from "vue-router";
 
 const userStore = useUserStore();
 const settingsStore = useSettingsStore();
+const cartStore = useCartStore();
+const route = useRoute();
 
 (watch(
   () => settingsStore.currentTheme,
@@ -25,10 +28,18 @@ const settingsStore = useSettingsStore();
 ),
   { immediate: true });
 
-onMounted(() => {
-  store.dispatch("cart/initCart");
-  settingsStore.initTheme();
+const pageDescription = computed(() => {
+  const routeDescription = route.meta?.description;
+  if (typeof routeDescription === "string") {
+    return routeDescription;
+  } else {
+    return "Veh Shop";
+  }
+});
 
+onMounted(() => {
+  cartStore.initCart();
+  settingsStore.initTheme();
   userStore.initSession();
 });
 </script>

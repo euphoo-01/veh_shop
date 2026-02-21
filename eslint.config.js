@@ -1,16 +1,17 @@
-import { defineConfig, globalIgnores } from 'eslint/config';
-import globals from 'globals';
-import js from '@eslint/js';
-import pluginVue from 'eslint-plugin-vue';
-import prettier from 'eslint-config-prettier';
+import { defineConfig, globalIgnores } from "eslint/config";
+import globals from "globals";
+import js from "@eslint/js";
+import pluginVue from "eslint-plugin-vue";
+import prettier from "eslint-config-prettier";
+import vueTsConfig from "@vue/eslint-config-typescript";
 
 export default defineConfig([
   {
-    name: 'app/files-to-lint',
-    files: ['**/*.{vue,js,mjs,jsx}'],
+    name: "app/files-to-lint",
+    files: ["**/*.{vue,js,mjs,jsx}"],
   },
 
-  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**', '**/.unlighthouse/**']),
+  globalIgnores(["**/dist/**", "**/dist-ssr/**", "**/coverage/**", "**/.unlighthouse/**"]),
 
   {
     languageOptions: {
@@ -21,7 +22,8 @@ export default defineConfig([
   },
 
   js.configs.recommended,
-  ...pluginVue.configs['flat/essential'],
+  ...pluginVue.configs["flat/essential"],
+  ...vueTsConfig(),
 
   prettier,
 ]);

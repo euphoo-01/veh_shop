@@ -19,43 +19,37 @@
       <div class="cart_item__quantity-selector">
         <button
           class="cart_item__button"
-          @click="updateQuantity({ productId: item.id, quantity: item.quantity - 1 })"
+          @click="cartStore.updateQuantity({ id: item.id, quantity: item.quantity - 1 })"
         >
           -
         </button>
         <span class="cart_item__quantity">{{ item.quantity }}</span>
         <button
           class="cart_item__button"
-          @click="updateQuantity({ productId: item.id, quantity: item.quantity + 1 })"
+          @click="cartStore.updateQuantity({ id: item.id, quantity: item.quantity + 1 })"
         >
           +
         </button>
       </div>
-      <button class="cart_item__remove" @click="removeItem(item.id)">Remove</button>
+      <button class="cart_item__remove" @click="cartStore.removeItem(item.id)">Remove</button>
     </div>
 
     <p class="cart_item__total">{{ (item.price * item.quantity).toFixed(2) }} $</p>
   </div>
 </template>
 
-<script>
-import { mapMutations } from 'vuex';
+<script setup lang="ts">
+import { useCartStore } from "../store";
+import type { Product } from "@/modules/vehicle/types";
+import { useRouter } from "vue-router";
 
-export default {
-  name: 'CartItem',
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {
-    ...mapMutations('cart', ['removeItem', 'updateQuantity']),
-    goToProduct(id) {
-      this.$router.push({ name: 'product', params: { id } });
-    },
-  },
-};
+const router = useRouter();
+const cartStore = useCartStore();
+
+defineProps({ item: { type: Object, required: true } });
+function goToProduct(id: Product["id"]) {
+  router.push({ name: "product", params: { id } });
+}
 </script>
 
 <style scoped>

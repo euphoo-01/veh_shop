@@ -16,8 +16,9 @@
 
 <script>
 import { mapState, mapActions } from "pinia";
-import { mapMutations } from "vuex";
 import { useVehicleStore } from "@/modules/vehicle/store";
+import { useCartStore } from "@/modules/cart/store";
+import { useUserStore } from "@/modules/user/store";
 import IconSVG from "@/components/IconSVG.vue";
 import ModalUI from "@/components/ui/ModalUI.vue";
 import ProductGallery from "@/modules/product/components/ProductGallery.vue";
@@ -39,13 +40,14 @@ export default {
   },
   computed: {
     ...mapState(useVehicleStore, ["productDetails"]),
+    ...mapState(useUserStore, ["isAuthorized"]),
   },
   methods: {
     ...mapActions(useVehicleStore, ["fetchVehicleById"]),
-    ...mapMutations({ addItem: "cart/addItem" }),
+    ...mapActions(useCartStore, ["addItem"]),
     addToCart() {
       if (this.isAuthorized) {
-        this.addItem(this.currentProduct);
+        this.addItem(this.productDetails);
         this.switchModalVisible(true);
       } else {
         this.$router.push({ name: "login" });

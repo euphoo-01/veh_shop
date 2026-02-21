@@ -2,34 +2,25 @@
   <aside class="cart__summary summary">
     <h2 class="summary__title">Order Summary</h2>
     <div class="summary__row">
-      <span>Items ({{ cartItemCount }}):</span>
-      <span>{{ cartTotal }} $</span>
+      <span>Items ({{ cartStore.totalItems }}):</span>
+      <span>{{ cartStore.totalPrice }} $</span>
     </div>
     <div class="summary__row summary__row--total">
       <span>Total:</span>
-      <span>{{ cartTotal }} $</span>
+      <span>{{ cartStore.totalPrice }} $</span>
     </div>
     <ButtonUI primary class="summary__checkout"> Proceed to Checkout </ButtonUI>
-    <ButtonUI secondary class="summary__clear" @click="clearCart"> Clear Cart </ButtonUI>
+    <ButtonUI secondary class="summary__clear" @click="cartStore.clearCart()">
+      Clear Cart
+    </ButtonUI>
   </aside>
 </template>
 
-<script>
-import { mapGetters, mapMutations } from 'vuex';
-import ButtonUI from '@/components/ui/ButtonUI.vue';
+<script setup lang="ts">
+import { useCartStore } from "../store";
+import ButtonUI from "@/components/ui/ButtonUI.vue";
 
-export default {
-  name: 'CartSummary',
-  components: {
-    ButtonUI,
-  },
-  computed: {
-    ...mapGetters('cart', ['cartTotal', 'cartItemCount']),
-  },
-  methods: {
-    ...mapMutations('cart', ['clearCart']),
-  },
-};
+const cartStore = useCartStore();
 </script>
 
 <style scoped>
