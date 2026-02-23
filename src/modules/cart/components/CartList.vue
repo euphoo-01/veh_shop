@@ -4,21 +4,20 @@
   </div>
 </template>
 
-<script>
-import CartItem from './CartItem.vue';
+<script setup lang="ts">
+import CartItem from "./CartItem.vue";
+import type { CartItem as CartItemType } from "../types";
+import { toRefs } from "vue";
 
-export default {
-  name: 'CartList',
-  components: {
-    CartItem,
+const props = withDefaults(
+  defineProps<{
+    items: CartItemType[];
+  }>(),
+  {
+    items: () => [],
   },
-  props: {
-    items: {
-      type: Array,
-      default: () => [],
-    },
-  },
-};
+);
+const { items } = toRefs(props);
 </script>
 
 <style scoped>

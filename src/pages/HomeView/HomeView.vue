@@ -16,10 +16,11 @@ import { onMounted } from "vue";
 
 const homeStore = useHomeStore();
 
-const { featuredVehicles, reviews, isLoading } = storeToRefs(homeStore);
+const { featuredVehicles, reviews } = storeToRefs(homeStore);
+const { fetchHomeData } = homeStore;
 
 onMounted(async () => {
-  await homeStore.fetchHomeData();
+  await fetchHomeData();
 });
 </script>
 

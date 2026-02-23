@@ -40,21 +40,18 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import IconSVG from "@/components/IconSVG.vue";
+import { toRefs } from "vue";
 
-export default {
-  name: "AccountDetails",
-  components: {
-    IconSVG,
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
   },
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+});
+
+const { user } = toRefs(props);
 </script>
 
 <style scoped>

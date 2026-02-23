@@ -23,35 +23,25 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ProductGallery',
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      selectedImage: null,
-    };
-  },
-  computed: {
-    displayedImage() {
-      if (this.selectedImage) return this.selectedImage;
-      if (this.product && this.product.thumbnail) return this.product.thumbnail;
-      if (this.product && this.product.images && this.product.images.length > 0)
-        return this.product.images[0];
-      return '';
-    },
-  },
-  watch: {
-    product() {
-      this.selectedImage = null;
-    },
-  },
-};
+<script setup lang="ts">
+import type { Product } from "@/modules/vehicle/types";
+import { ref, computed, watch, toRefs } from "vue";
+
+const props = defineProps<{ product: Product }>();
+
+const { product } = toRefs(props);
+const selectedImage = ref<string>("");
+const displayedImage = computed(() => {
+  if (selectedImage.value) return selectedImage.value;
+  if (product.value && product.value.thumbnail) return product.value.thumbnail;
+  if (product.value && product.value.images && product.value.images.length > 0)
+    return product.value.images[0];
+  return "";
+});
+
+watch(product.value, () => {
+  selectedImage.value = "";
+});
 </script>
 
 <style scoped>

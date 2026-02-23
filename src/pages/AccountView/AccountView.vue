@@ -1,11 +1,7 @@
 <template>
   <main class="account">
     <Transition name="fade-left"
-      ><ErrorBubble
-        v-if="error.message"
-        :error="error"
-        :onCleanup="userStore.clearError"
-      ></ErrorBubble
+      ><ErrorBubble v-if="error.message" :error="error" :onCleanup="clearError"></ErrorBubble
     ></Transition>
     <h1 class="account_title">Account</h1>
     <IconSVG v-if="isLoading" class="account__spinner" of="spinner" size="extralarge" />
@@ -28,9 +24,10 @@ import { onMounted } from "vue";
 const userStore = useUserStore();
 
 const { error, user, isLoading } = storeToRefs(userStore);
+const { getDetailedUserData, clearError } = userStore;
 
 onMounted(async () => {
-  await userStore.getDetailedUserData();
+  await getDetailedUserData();
 });
 </script>
 <style>

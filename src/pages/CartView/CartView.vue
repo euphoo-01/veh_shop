@@ -1,8 +1,8 @@
 <template>
   <h1 class="cart__title">Shopping Cart</h1>
   <main class="cart">
-    <div v-if="cartStore.totalItems > 0" class="cart__container">
-      <CartList :items="cartStore.cartItems" />
+    <div v-if="totalItems > 0" class="cart__container">
+      <CartList :items="cartItems" />
       <CartSummary />
     </div>
 
@@ -15,8 +15,10 @@ import { useCartStore } from "@/modules/cart/store";
 import CartList from "@/modules/cart/components/CartList.vue";
 import CartSummary from "@/modules/cart/components/CartSummary.vue";
 import EmptyCart from "@/modules/cart/components/EmptyCart.vue";
+import { storeToRefs } from "pinia";
 
 const cartStore = useCartStore();
+const { cartItems, totalItems } = storeToRefs(cartStore);
 </script>
 
 <style scoped>

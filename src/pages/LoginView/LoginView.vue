@@ -2,10 +2,10 @@
   <main>
     <section class="login__wrapper">
       <Transition name="fade-left"
-        ><ErrorBubble v-if="error.status" :error="error" :onCleanup="userStore.clearError"
+        ><ErrorBubble v-if="error.status" :error="error" :onCleanup="clearError"
       /></Transition>
       <RegisterForm v-if="isRegistering" @switch-mode="switchFormMode" />
-      <LoginForm v-else @login="userStore.login" @switch-mode="switchFormMode" />
+      <LoginForm v-else @login="login" @switch-mode="switchFormMode" />
     </section>
   </main>
 </template>
@@ -20,6 +20,7 @@ import { ref } from "vue";
 const userStore = useUserStore();
 
 const { error } = storeToRefs(userStore);
+const { clearError, login } = userStore;
 const isRegistering = ref<boolean>(false);
 
 function switchFormMode() {

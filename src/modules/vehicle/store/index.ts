@@ -61,11 +61,11 @@ export const useVehicleStore = defineStore("vehicle", () => {
     }
   }
 
-  function setPriceFilter(value: PriceFilter): void {
+  function setPriceFilter(value: PriceFilter | ""): void {
     priceFilter.value = value;
   }
 
-  function setGroupFilter(value: GroupFilter): void {
+  function setGroupFilter(value: GroupFilter | ""): void {
     groupFilter.value = value;
   }
 

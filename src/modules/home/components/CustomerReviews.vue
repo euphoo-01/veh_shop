@@ -10,16 +10,12 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'CustomerReviews',
-  props: {
-    reviews: {
-      type: Array,
-      default: () => [],
-    },
-  },
-};
+<script setup lang="ts">
+import type { Quote } from "@/modules/reviews/types";
+import { toRefs } from "vue";
+
+const props = withDefaults(defineProps<{ reviews: Quote[] }>(), { reviews: () => [] });
+const { reviews } = toRefs(props);
 </script>
 
 <style scoped>

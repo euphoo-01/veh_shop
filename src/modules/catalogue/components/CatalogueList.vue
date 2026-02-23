@@ -26,17 +26,19 @@
     </TransitionGroup>
   </section>
 </template>
-<script>
-export default {
-  props: {
-    vehicles: Array,
-  },
-  methods: {
-    goToProductCard(id) {
-      this.$router.push({ name: 'product', params: { id } });
-    },
-  },
-};
+<script setup lang="ts">
+import type { ProductPreview, Product } from "@/modules/vehicle/types";
+import { useRouter } from "vue-router";
+import { toRefs } from "vue";
+
+const props = defineProps<{ vehicles: ProductPreview<Product>[] }>();
+const router = useRouter();
+
+const { vehicles } = toRefs(props);
+
+function goToProductCard(id: Product["id"]) {
+  router.push({ name: "product", params: { id } });
+}
 </script>
 <style>
 .catalogue__list {

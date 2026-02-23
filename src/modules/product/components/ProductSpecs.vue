@@ -26,16 +26,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ProductSpecs',
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+<script setup lang="ts">
+import type { Product } from "@/modules/vehicle/types";
+import { toRefs } from "vue";
+
+const props = defineProps<{ product: Product }>();
+const { product } = toRefs(props);
 </script>
 
 <style scoped>

@@ -17,6 +17,16 @@ export interface User {
   address: Address;
 }
 
+export interface LoginCredentials {
+  login: string;
+  password: string;
+}
+
+export interface RegisterCredentials extends LoginCredentials {
+  username: string;
+  phone: string;
+}
+
 export interface AuthTokens {
   accessToken: string;
   refreshToken: string;

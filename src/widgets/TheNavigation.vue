@@ -33,16 +33,11 @@ import { computed, ref } from "vue";
 import NavigationMenu from "@/modules/navigation/components/NavigationMenu.vue";
 const userStore = useUserStore();
 const cartStore = useCartStore();
-const route = useRoute();
 
 const { username, isAuthorized } = storeToRefs(userStore);
-const { totalProducts } = cartStore;
+const { totalProducts } = storeToRefs(cartStore);
 
 const isBurgerVisible = ref<boolean>(false);
-
-const currentRoute = computed(() => {
-  return route.name;
-});
 
 function switchModal(value: boolean) {
   isBurgerVisible.value = value;

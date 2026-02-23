@@ -22,26 +22,21 @@
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ProductReviews',
-  props: {
-    reviews: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  methods: {
-    formatDate(dateString) {
-      if (!dateString) return '';
-      return new Date(dateString).toLocaleDateString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
-    },
-  },
-};
+<script setup lang="ts">
+import type { Review } from "@/modules/vehicle/types";
+import { toRefs } from "vue";
+
+const props = defineProps<{ reviews: Review[] }>();
+const { reviews } = toRefs(props);
+
+function formatDate(dateString: string) {
+  if (!dateString) return "";
+  return new Date(dateString).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
 </script>
 
 <style scoped>

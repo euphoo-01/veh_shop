@@ -11,33 +11,19 @@
   </ModalUI>
 </template>
 
-<script>
-import ModalUI from '@/components/ui/ModalUI.vue';
-import InputUI from '@/components/ui/InputUI.vue';
-import ButtonUI from '@/components/ui/ButtonUI.vue';
+<script setup lang="ts">
+import ModalUI from "@/components/ui/ModalUI.vue";
+import InputUI from "@/components/ui/InputUI.vue";
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import { reactive } from "vue";
+import type { LoginCredentials } from "@/modules/user/types";
 
-export default {
-  name: 'LoginForm',
-  components: {
-    ModalUI,
-    InputUI,
-    ButtonUI,
-  },
-  data() {
-    return {
-      user: {
-        login: '',
-        password: '',
-      },
-    };
-  },
-  methods: {
-    handleLogin() {
-      this.$emit('login', this.user);
-    },
-  },
-  emits: ['login', 'switch-mode'],
-};
+const user = reactive<LoginCredentials>({ login: "", password: "" });
+const emit = defineEmits(["login", "switch-mode"]);
+
+function handleLogin() {
+  emit("login", user);
+}
 </script>
 
 <style scoped>

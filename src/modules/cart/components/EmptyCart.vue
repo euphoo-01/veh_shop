@@ -6,17 +6,9 @@
   </div>
 </template>
 
-<script>
-import ButtonUI from '@/components/ui/ButtonUI.vue';
-import IconSVG from '@/components/IconSVG.vue';
-
-export default {
-  name: 'EmptyCart',
-  components: {
-    ButtonUI,
-    IconSVG,
-  },
-};
+<script setup lang="ts">
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import IconSVG from "@/components/IconSVG.vue";
 </script>
 
 <style scoped>

@@ -23,18 +23,26 @@ export interface Car {
   minimumOrderQuantity: number;
   images: Array<ImageURL>;
   thumbnail: ImageURL;
+  dimensions: {
+    height: number;
+    width: number;
+    depth: number;
+  };
 }
 
 export interface Motorcycle extends Car {}
 
 export interface Product extends Car, Motorcycle {}
 
-export type ProductPreview<T extends Product> = Pick<T, "title" | "brand" | "price" | "thumbnail">;
+export type ProductPreview<T extends Product> = Pick<
+  T,
+  "id" | "title" | "brand" | "price" | "thumbnail"
+>;
 
 export interface Review {
   rating: number;
   comment: string;
-  date: Date;
+  date: string;
   reviewerName: string;
   reviewerEmail: `${string}@${string}.${string}`;
 }

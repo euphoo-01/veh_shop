@@ -1,39 +1,37 @@
 <template>
   <span v-html="svgCode" :class="{ icon: true, [`icon-${size}`]: true, clickable }"></span>
 </template>
-<script>
-import { checkIfIconNameExist, getSvgIconCode } from '@/modules/shared/services/iconsHelper';
-export default {
-  props: {
-    of: {
-      type: String,
-      required: true,
-    },
-    size: {
-      type: String,
-      default: 'small',
-      validator: (value) => {
-        return ['small', 'medium', 'large', 'extralarge'].includes(value);
-      },
-    },
-    clickable: {
-      type: Boolean,
-      default: false,
+<script setup lang="ts">
+import { checkIfIconNameExist, getSvgIconCode } from "../modules/shared/services/iconsHelper";
+import { computed, toRefs, type PropType } from "vue";
+
+export type IconSize = "small" | "medium" | "large" | "extralarge";
+
+const props = defineProps({
+  of: {
+    type: String,
+    required: true,
+    validator(value: string) {
+      return checkIfIconNameExist(value);
     },
   },
-  computed: {
-    svgCode() {
-      return getSvgIconCode(this.of);
+  size: {
+    type: String as PropType<IconSize>,
+    default: "small",
+    validator(value: string) {
+      return ["small", "medium", "large", "extralarge"].includes(value);
     },
   },
-  watch: {
-    of(newVal) {
-      if (!checkIfIconNameExist(newVal)) {
-        console.warn(`Иконки ${newVal} не существует!`);
-      }
-    },
+  clickable: {
+    type: Boolean,
+    default: false,
   },
-};
+});
+const { size, clickable } = toRefs(props);
+
+const svgCode = computed(() => {
+  return getSvgIconCode(props.of);
+});
 </script>
 <style>
 .icon {

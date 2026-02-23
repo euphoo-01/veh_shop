@@ -17,9 +17,10 @@ import { onMounted } from "vue";
 const vehicleStore = useVehicleStore();
 
 const { filteredVehicles, isLoading } = storeToRefs(vehicleStore);
+const { fetchVehicles } = vehicleStore;
 
 onMounted(async () => {
-  await vehicleStore.fetchVehicles();
+  await fetchVehicles();
 });
 </script>
 <style>

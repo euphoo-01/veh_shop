@@ -16,20 +16,15 @@
   </section>
 </template>
 
-<script>
-import ButtonUI from '@/components/ui/ButtonUI.vue';
+<script setup lang="ts">
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import { useRouter } from "vue-router";
 
-export default {
-  name: 'HeroSection',
-  components: {
-    ButtonUI,
-  },
-  methods: {
-    goToCatalogue() {
-      this.$router.push({ name: 'catalogue' });
-    },
-  },
-};
+const router = useRouter();
+
+function goToCatalogue() {
+  router.push({ name: "catalogue" });
+}
 </script>
 
 <style scoped>

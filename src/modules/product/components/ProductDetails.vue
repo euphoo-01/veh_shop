@@ -8,10 +8,7 @@
           <span>★ {{ product.rating }}</span>
         </div>
         <span class="details__sku">SKU: {{ product.sku }}</span>
-        <span
-          class="details__stock"
-          :class="{ 'details__stock--in-stock': product.stock > 0 }"
-        >
+        <span class="details__stock" :class="{ 'details__stock--in-stock': product.stock > 0 }">
           {{ product.availabilityStatus }}
         </span>
       </div>
@@ -31,7 +28,7 @@
     <div class="details__actions">
       <ButtonUI
         primary
-        @click="$emit('add-to-cart')"
+        @click="emit('add-to-cart')"
         :disabled="product.stock <= 0"
         class="details__actions_button"
       >
@@ -43,24 +40,16 @@
   </section>
 </template>
 
-<script>
-import ButtonUI from '@/components/ui/ButtonUI.vue';
-import ProductSpecs from './ProductSpecs.vue';
+<script setup lang="ts">
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import ProductSpecs from "./ProductSpecs.vue";
+import type { Product } from "@/modules/vehicle/types";
+import { toRefs } from "vue";
 
-export default {
-  name: 'ProductDetails',
-  components: {
-    ButtonUI,
-    ProductSpecs,
-  },
-  props: {
-    product: {
-      type: Object,
-      required: true,
-    },
-  },
-  emits: ['add-to-cart'],
-};
+const props = defineProps<{ product: Product }>();
+const emit = defineEmits(["add-to-cart"]);
+
+const { product } = toRefs(props);
 </script>
 
 <style scoped>

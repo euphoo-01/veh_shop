@@ -40,12 +40,14 @@ const route = useRoute();
 
 const { productDetails, isLoading } = storeToRefs(vehicleStore);
 const { isAuthorized } = storeToRefs(userStore);
+const { addItem } = cartStore;
+const { fetchVehicleById } = vehicleStore;
 const isSuccessFormVisible = ref<boolean>(false);
 const isErrorFormVisible = ref<boolean>(false);
 
 function addToCart() {
   if (isAuthorized && productDetails.value) {
-    cartStore.addItem(productDetails.value);
+    addItem(productDetails.value);
     switchSuccessModalVisible(true);
   } else if (isAuthorized && !productDetails.value) {
     switchErrorModalVisible(true);
@@ -65,7 +67,7 @@ function switchErrorModalVisible(value: boolean) {
 onMounted(async () => {
   const vehId = route.params.id as Car["id"] | undefined;
   if (vehId) {
-    await vehicleStore.fetchVehicleById(vehId);
+    await fetchVehicleById(vehId);
   }
 });
 </script>

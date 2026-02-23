@@ -29,29 +29,25 @@
   </section>
 </template>
 
-<script>
-import ButtonUI from '@/components/ui/ButtonUI.vue';
+<script setup lang="ts">
+import ButtonUI from "@/components/ui/ButtonUI.vue";
+import type { Product, ProductPreview } from "@/modules/vehicle/types";
+import { toRefs } from "vue";
+import { useRouter } from "vue-router";
 
-export default {
-  name: 'FeaturedVehicles',
-  components: {
-    ButtonUI,
-  },
-  props: {
-    vehicles: {
-      type: Array,
-      default: () => [],
-    },
-  },
-  methods: {
-    goToProductCard(id) {
-      this.$router.push({ name: 'product', params: { id } });
-    },
-    goToCatalogue() {
-      this.$router.push({ name: 'catalogue' });
-    },
-  },
-};
+const router = useRouter();
+
+const props = withDefaults(defineProps<{ vehicles: ProductPreview<Product>[] }>(), {
+  vehicles: () => [],
+});
+const { vehicles } = toRefs(props);
+
+function goToProductCard(id: Product["id"]) {
+  router.push({ name: "product", params: { id } });
+}
+function goToCatalogue() {
+  router.push({ name: "catalogue" });
+}
 </script>
 
 <style scoped>

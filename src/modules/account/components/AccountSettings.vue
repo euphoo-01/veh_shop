@@ -10,35 +10,28 @@
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
 import ButtonUI from "@/components/ui/ButtonUI.vue";
 import SelectUI from "@/components/ui/SelectUI.vue";
-import { mapActions, mapState } from "pinia";
 import { useUserStore } from "@/modules/user/store";
 import { useSettingsStore } from "@/modules/settings/store";
+import { computed } from "vue";
 
-export default {
-  name: "AccountSettings",
-  components: {
-    ButtonUI,
-    SelectUI,
+const userStore = useUserStore();
+const settingsStore = useSettingsStore();
+
+const { logout } = userStore;
+
+const theme = computed({
+  get() {
+    return settingsStore.currentTheme as string;
   },
-  computed: {
-    ...mapState(useSettingsStore, ["currentTheme"]),
-    theme: {
-      get() {
-        return this.currentTheme;
-      },
-      set(value) {
-        this.setTheme(value);
-      },
-    },
+  set(value: string) {
+    if (value === "light" || value === "dark") {
+      settingsStore.setTheme(value);
+    }
   },
-  methods: {
-    ...mapActions(useUserStore, ["logout"]),
-    ...mapActions(useSettingsStore, ["setTheme"]),
-  },
-};
+});
 </script>
 
 <style scoped>

@@ -19,19 +19,19 @@
       <div class="cart_item__quantity-selector">
         <button
           class="cart_item__button"
-          @click="cartStore.updateQuantity({ id: item.id, quantity: item.quantity - 1 })"
+          @click="updateQuantity({ id: item.id, quantity: item.quantity - 1 })"
         >
           -
         </button>
         <span class="cart_item__quantity">{{ item.quantity }}</span>
         <button
           class="cart_item__button"
-          @click="cartStore.updateQuantity({ id: item.id, quantity: item.quantity + 1 })"
+          @click="updateQuantity({ id: item.id, quantity: item.quantity + 1 })"
         >
           +
         </button>
       </div>
-      <button class="cart_item__remove" @click="cartStore.removeItem(item.id)">Remove</button>
+      <button class="cart_item__remove" @click="removeItem(item.id)">Remove</button>
     </div>
 
     <p class="cart_item__total">{{ (item.price * item.quantity).toFixed(2) }} $</p>
@@ -42,11 +42,16 @@
 import { useCartStore } from "../store";
 import type { Product } from "@/modules/vehicle/types";
 import { useRouter } from "vue-router";
+import { toRefs } from "vue";
+import type { CartItem } from "../types";
 
 const router = useRouter();
 const cartStore = useCartStore();
 
-defineProps({ item: { type: Object, required: true } });
+const props = defineProps<{ item: CartItem }>();
+const { item } = toRefs(props);
+const { removeItem, updateQuantity } = cartStore;
+
 function goToProduct(id: Product["id"]) {
   router.push({ name: "product", params: { id } });
 }

@@ -13,39 +13,13 @@
     </SelectUI>
   </section>
 </template>
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useVehicleStore } from "@/modules/vehicle/store";
 import SelectUI from "@/components/ui/SelectUI.vue";
 import IconSVG from "@/components/IconSVG.vue";
-export default {
-  components: { SelectUI, IconSVG },
-  computed: {
-    ...mapState(useVehicleStore, ["groupFilter", "priceFilter"]),
-    groupFilter: {
-      get() {
-        return this.groupFilterGetter;
-      },
-      set(value) {
-        this.mutateGroupFilter(value);
-      },
-    },
-    priceFilter: {
-      get() {
-        return this.priceFilterGetter;
-      },
-      set(value) {
-        this.mutatePriceFilter(value);
-      },
-    },
-  },
-  methods: {
-    ...mapActions(useVehicleStore, {
-      mutateGroupFilter: "setGroupFilter",
-      mutatePriceFilter: "setPriceFilter",
-    }),
-  },
-};
+const vehicleStore = useVehicleStore();
+const { groupFilter, priceFilter } = storeToRefs(vehicleStore);
 </script>
 <style>
 .catalogue__filters {
