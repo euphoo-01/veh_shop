@@ -2,13 +2,16 @@
   <Teleport to="head">
     <meta name="description" :content="pageDescription" />
   </Teleport>
-  <TheHeader />
-  <main>
-    <RouterView />
-  </main>
+  <v-app>
+    <TheHeader />
+    <main>
+      <RouterView />
+    </main>
+  </v-app>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, watch } from "vue";
+import { useTheme } from "vuetify";
 import TheHeader from "./app/layout/TheHeader.vue";
 import { useUserStore } from "./modules/user/store";
 import { useSettingsStore } from "./modules/settings/store";
@@ -19,14 +22,16 @@ const userStore = useUserStore();
 const settingsStore = useSettingsStore();
 const cartStore = useCartStore();
 const route = useRoute();
+const theme = useTheme();
 
-(watch(
+watch(
   () => settingsStore.currentTheme,
   (newValue) => {
     document.documentElement.className = newValue;
+    theme.global.name.value = newValue;
   },
-),
-  { immediate: true });
+  { immediate: true },
+);
 
 const pageDescription = computed(() => {
   const routeDescription = route.meta?.description;

@@ -1,5 +1,5 @@
-@import './normalize.css';
-@import './variables.css';
+@import "./normalize.css";
+@import "./variables.css";
 
 #app {
   margin: 0 auto;
@@ -18,10 +18,13 @@ button,
 input,
 select,
 option,
-label,
-span {
+label {
   font-family: Karla;
   color: var(--text-color);
+}
+
+.v-application {
+  font-family: Karla, sans-serif !important;
 }
 
 body {

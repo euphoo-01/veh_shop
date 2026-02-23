@@ -1,68 +1,54 @@
 <template>
-  <section class="reviews" v-if="reviews.length">
-    <h2 class="reviews__title">What Our Customers Say</h2>
-    <div class="reviews__grid">
-      <div v-for="review in reviews" :key="review.id" class="review__card">
-        <p class="card__text">"{{ review.quote }}"</p>
-        <p class="card__author">- {{ review.author }}</p>
-      </div>
-    </div>
-  </section>
+  <v-container v-if="reviews.length" class="py-16">
+    <h2 class="text-h4 text-center mb-12 font-weight-bold text-on-background">
+      What Our Customers Say
+    </h2>
+
+    <v-row>
+      <v-col v-for="review in reviews" :key="review.id" cols="12" md="4">
+        <v-card
+          class="h-100 pa-10 d-flex flex-column justify-space-between review-card"
+          variant="outlined"
+          :ripple="false"
+        >
+          <v-card-text
+            class="text-body-1 font-italic mb-6 text-on-surface"
+            style="line-height: 1.6"
+          >
+            "{{ review.quote }}"
+          </v-card-text>
+
+          <v-card-subtitle
+            class="text-right text-subtitle-1 font-weight-bold text-primary"
+            style="opacity: 1; letter-spacing: 0.5px"
+          >
+            - {{ review.author }}
+          </v-card-subtitle>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
 import type { Quote } from "@/modules/reviews/types";
 import { toRefs } from "vue";
 
-const props = withDefaults(defineProps<{ reviews: Quote[] }>(), { reviews: () => [] });
+const props = withDefaults(defineProps<{ reviews: Quote[] }>(), {
+  reviews: () => [],
+});
 const { reviews } = toRefs(props);
 </script>
 
 <style scoped>
-.reviews__title {
-  text-align: center;
-  margin-bottom: 48px;
-  position: relative;
-}
-
-.reviews__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
-}
-
-.review__card {
-  background-color: color-mix(in srgb, var(--primary-color) 5%, var(--background-color));
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
+.review-card {
+  background-color: color-mix(in srgb, rgb(var(--v-theme-primary)) 5%, rgb(var(--v-theme-surface)));
+  color: rgb(var(--v-theme-on-surface));
+  border-color: rgba(var(--v-theme-primary), 0.2) !important;
   transition: border-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.review__card:hover {
-  border-color: var(--primary-color);
-}
-
-.card__text {
-  font-style: italic;
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 24px;
-  position: relative;
-}
-
-.card__author {
-  text-align: right;
-  font-weight: 700;
-  color: var(--primary-color);
-  letter-spacing: 0.5px;
-}
-
-@media (max-width: 768px) {
-  .reviews__grid {
-    grid-template-columns: 1fr;
-  }
+.review-card:hover {
+  border-color: rgb(var(--v-theme-primary)) !important;
 }
 </style>

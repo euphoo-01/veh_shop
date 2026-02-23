@@ -1,9 +1,9 @@
 <template>
-  <main class="home">
+  <div class="home-view d-flex flex-column" style="gap: 80px; padding-bottom: 120px">
     <HeroSection />
     <FeaturedVehicles :vehicles="featuredVehicles" />
     <CustomerReviews :reviews="reviews" />
-  </main>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -25,16 +25,9 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.home {
-  display: flex;
-  flex-direction: column;
-  gap: 80px;
-  padding-bottom: 120px;
-}
-
 @media (max-width: 768px) {
-  .home {
-    gap: 60px;
+  .home-view {
+    gap: 60px !important;
   }
 }
 </style>

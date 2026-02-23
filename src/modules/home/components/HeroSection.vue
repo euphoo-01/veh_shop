@@ -1,24 +1,37 @@
 <template>
-  <section class="hero">
-    <div class="hero__content">
-      <h1 class="hero__title">Find Your Dream Ride</h1>
-      <p class="hero__subtitle">Explore our premium collection of vehicles and motorcycles.</p>
-      <ButtonUI primary @click="goToCatalogue"> Shop Now </ButtonUI>
-    </div>
-    <div class="hero__image_container">
-      <img
-        src="@/app/assets/home_banner.webp"
-        alt="Home Banner"
-        class="hero__image"
-        fetchpriority="high"
-      />
-    </div>
-  </section>
+  <v-container class="py-12">
+    <v-row align="center" justify="space-between" class="flex-column-reverse flex-md-row">
+      <v-col cols="12" md="6" class="text-center text-md-left">
+        <h1 class="text-h2 font-weight-bold mb-6 text-on-background">Find Your Dream Ride</h1>
+        <p
+          class="text-h5 text-secondary mb-8 mx-auto mx-md-0"
+          style="line-height: 1.6; max-width: 450px"
+        >
+          Explore our premium collection of vehicles and motorcycles.
+        </p>
+        <v-btn
+          color="primary"
+          size="x-large"
+          class="text-none px-8 hero-btn"
+          flat
+          rounded="0"
+          min-width="150"
+          height="50"
+          @click="goToCatalogue"
+        >
+          Shop Now
+        </v-btn>
+      </v-col>
+      <v-col cols="12" md="6" class="d-flex justify-center justify-md-end mb-8 mb-md-0">
+        <v-img :src="homeBanner" alt="Home Banner" max-width="850" width="100%" eager></v-img>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import ButtonUI from "@/components/ui/ButtonUI.vue";
 import { useRouter } from "vue-router";
+import homeBanner from "@/app/assets/home_banner.webp";
 
 const router = useRouter();
 
@@ -28,64 +41,11 @@ function goToCatalogue() {
 </script>
 
 <style scoped>
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  padding: 48px 0;
-  min-height: 400px;
+.hero-btn {
+  transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.hero__content {
-  flex: 1;
-  max-width: 550px;
-}
-
-.hero__title {
-  margin-bottom: 24px;
-  line-height: 1.1;
-}
-
-.hero__subtitle {
-  font-size: 20px;
-  line-height: 1.6;
-  margin-bottom: 32px;
-  color: var(--secondary-color);
-  max-width: 450px;
-}
-
-.hero__image_container {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.hero__image {
-  width: 100%;
-  max-width: 850px;
-}
-
-@media (max-width: 1024px) {
-  .hero {
-    flex-direction: column-reverse;
-    text-align: center;
-    gap: 40px;
-  }
-
-  .hero__content {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .hero__subtitle {
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .hero__image_container {
-    justify-content: center;
-  }
+.hero-btn:hover {
+  background-color: rgb(var(--v-theme-secondary)) !important;
 }
 </style>

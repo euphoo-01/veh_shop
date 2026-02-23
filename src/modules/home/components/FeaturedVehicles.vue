@@ -1,36 +1,57 @@
 <template>
-  <section class="featured" v-if="vehicles.length">
-    <h2 class="featured__title">Featured Vehicles</h2>
-    <div class="featured__grid">
-      <div
-        v-for="vehicle in vehicles"
-        :key="vehicle.id"
-        class="featured__card"
-        @click="goToProductCard(vehicle.id)"
+  <v-container v-if="vehicles.length" class="py-12">
+    <h2 class="text-h4 text-center mb-12 font-weight-bold text-on-background">Featured Vehicles</h2>
+
+    <v-row justify="center">
+      <v-col v-for="vehicle in vehicles" :key="vehicle.id" cols="12" sm="6" md="4" lg="3">
+        <v-card
+          class="h-100 d-flex flex-column align-center pt-6 pb-4 featured-card"
+          variant="outlined"
+          @click="goToProductCard(vehicle.id)"
+          link
+          :ripple="false"
+        >
+          <div class="card-image-wrapper mb-4">
+            <v-img
+              :src="vehicle.thumbnail"
+              :alt="vehicle.title"
+              height="200"
+              width="100%"
+              class="card-image"
+            ></v-img>
+          </div>
+
+          <v-card-title
+            class="text-center text-wrap pt-0 pb-2 text-body-1 font-weight-bold text-on-surface"
+          >
+            {{ vehicle.title }}
+          </v-card-title>
+
+          <v-card-text class="text-h6 font-weight-bold pt-0 text-primary">
+            ${{ vehicle.price }}
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
+    <div class="d-flex justify-center mt-12">
+      <v-btn
+        variant="text"
+        color="on-surface"
+        size="large"
+        class="text-none px-8 secondary-btn"
+        rounded="0"
+        min-width="150"
+        height="50"
+        @click="goToCatalogue"
       >
-        <div class="card__image_wrapper">
-          <img
-            :src="vehicle.thumbnail"
-            :alt="vehicle.title"
-            class="card__image"
-            crossorigin="anonymous"
-            loading="lazy"
-          />
-        </div>
-        <h2 class="card__title">{{ vehicle.title }}</h2>
-        <h2 class="card__price">
-          <b>${{ vehicle.price }}</b>
-        </h2>
-      </div>
+        View All
+      </v-btn>
     </div>
-    <div class="featured__action">
-      <ButtonUI secondary @click="goToCatalogue"> View All </ButtonUI>
-    </div>
-  </section>
+  </v-container>
 </template>
 
 <script setup lang="ts">
-import ButtonUI from "@/components/ui/ButtonUI.vue";
 import type { Product, ProductPreview } from "@/modules/vehicle/types";
 import { toRefs } from "vue";
 import { useRouter } from "vue-router";
@@ -51,70 +72,40 @@ function goToCatalogue() {
 </script>
 
 <style scoped>
-.featured__title {
-  text-align: center;
-  margin-bottom: 48px;
-  position: relative;
-}
-
-.featured__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 32px;
-}
-
-.featured__card {
-  background-color: var(--background-color);
-  border: 1px solid color-mix(in srgb, var(--secondary-color) 30%, transparent);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.featured-card {
+  background-color: rgb(var(--v-theme-surface));
+  color: rgb(var(--v-theme-on-surface));
+  border-color: rgba(var(--v-theme-secondary), 0.3) !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.featured__card:hover {
-  background-color: color-mix(in srgb, var(--primary-color) 20%, transparent);
-  border-color: var(--primary-color);
+.featured-card:hover {
+  background-color: rgba(var(--v-theme-primary), 0.2);
+  border-color: rgb(var(--v-theme-primary)) !important;
   cursor: pointer;
 }
 
-.card__image_wrapper {
+.card-image-wrapper {
   width: 100%;
-  height: 320px;
   display: flex;
-  align-items: center;
   justify-content: center;
   overflow: hidden;
-  margin-bottom: 24px;
-  background-color: transparent;
 }
 
-.card__image {
-  max-width: 90%;
-  max-height: 90%;
-  object-fit: contain;
-  transform: scale(1.5);
+.card-image {
   transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.card__title {
-  text-align: center;
+.featured-card:hover .card-image {
+  transform: scale(1.1);
 }
 
-.card__price {
-  color: var(--primary-color);
+.secondary-btn {
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-.featured__action {
-  margin-top: 48px;
-  display: flex;
-  justify-content: center;
-}
-
-@media (max-width: 768px) {
-  .featured__grid {
-    grid-template-columns: 1fr;
-  }
+.secondary-btn:hover {
+  background-color: rgba(var(--v-theme-primary), 0.2);
+  border-bottom: 3px solid rgb(var(--v-theme-primary));
 }
 </style>
