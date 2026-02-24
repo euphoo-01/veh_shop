@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Desktop Menu -->
     <div class="d-none d-md-flex align-center">
       <NavigationMenu
         :username="username"
@@ -9,9 +8,7 @@
       />
     </div>
 
-    <!-- Mobile Menu -->
     <div class="d-flex d-md-none align-center ga-4">
-      <!-- Mobile Cart Icon -->
       <v-btn
         v-if="isAuthorized"
         :to="{ name: 'cart', params: { username } }"
@@ -32,7 +29,6 @@
         <v-icon v-else icon="mdi-cart" size="large"></v-icon>
       </v-btn>
 
-      <!-- Burger Menu -->
       <v-app-bar-nav-icon
         variant="text"
         @click="isBurgerVisible = true"
@@ -40,7 +36,6 @@
         size="large"
       ></v-app-bar-nav-icon>
 
-      <!-- Mobile Navigation Drawer (Modal) -->
       <v-dialog v-model="isBurgerVisible" fullscreen transition="dialog-bottom-transition">
         <v-card color="background" class="d-flex flex-column h-100">
           <v-toolbar color="surface" density="compact">
