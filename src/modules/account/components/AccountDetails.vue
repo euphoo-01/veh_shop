@@ -1,47 +1,79 @@
 <template>
-  <div class="account__info info__column">
-    <div class="account__info info__row">
-      <img
-        class="account__image"
-        :src="user?.image"
-        :alt="`${user?.username} Avatar`"
-        crossorigin="anonymous"
-      />
-      <div class="account__info info__column">
-        <p><b>Firstname: </b>{{ user?.firstName }}</p>
-        <p><b>Lastname: </b>{{ user?.lastName }}</p>
-        <p><b>Gender: </b>{{ user?.gender }}</p>
-      </div>
-    </div>
-    <div class="account__info info__row">
-      <div class="account__info info__column">
-        <h3>Address</h3>
-        <p><b>Full Address: </b> {{ user?.address?.address }}</p>
-        <p><b>City: </b> {{ user?.address?.city }}</p>
-        <p><b>State: </b> {{ user?.address?.state }}</p>
-        <p><b>Postal: </b> {{ user?.address?.postalCode }}</p>
-      </div>
-      <div class="account__info info__column">
-        <h3>Payment Methods</h3>
-        <div class="info__payment info__row">
-          <IconSVG class="info__icon" of="card" size="large" />
-          <p v-if="user?.bank">
+  <div class="account__info w-100">
+    <v-row class="mb-4" align="start">
+      <v-col cols="12" sm="auto" class="d-flex justify-center justify-sm-start">
+        <v-img
+          :src="user?.image"
+          :alt="`${user?.username} Avatar`"
+          width="150"
+          height="150"
+          cover
+          crossorigin="anonymous"
+          class="account__image rounded"
+        >
+          <template #placeholder>
+            <div class="d-flex align-center justify-center fill-height bg-grey-lighten-4">
+              <v-progress-circular indeterminate color="primary"></v-progress-circular>
+            </div>
+          </template>
+        </v-img>
+      </v-col>
+
+      <v-col
+        cols="12"
+        sm="auto"
+        class="d-flex flex-column ga-2 justify-center pt-4 pt-sm-0"
+        alignSelf="center"
+      >
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">Firstname: </strong>{{ user?.firstName }}
+        </p>
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">Lastname: </strong>{{ user?.lastName }}
+        </p>
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">Gender: </strong>{{ user?.gender }}
+        </p>
+      </v-col>
+    </v-row>
+
+    <v-row class="mt-4">
+      <v-col cols="12" md="6" class="d-flex flex-column ga-2">
+        <h3 class="text-h6 font-weight-bold mb-2">Address</h3>
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">Full Address: </strong> {{ user?.address?.address }}
+        </p>
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">City: </strong> {{ user?.address?.city }}
+        </p>
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">State: </strong> {{ user?.address?.state }}
+        </p>
+        <p class="text-body-1 mb-0">
+          <strong class="font-weight-bold">Postal: </strong> {{ user?.address?.postalCode }}
+        </p>
+      </v-col>
+
+      <v-col cols="12" md="6" class="d-flex flex-column ga-2">
+        <h3 class="text-h6 font-weight-bold mb-2">Payment Methods</h3>
+        <div class="d-flex align-center ga-2 text-body-1">
+          <v-icon icon="mdi-credit-card" size="large"></v-icon>
+          <span v-if="user?.bank">
             {{ `**** **** **** ${user.bank.cardNumber.slice(-4)}` }}
-          </p>
+          </span>
         </div>
-        <div class="info__payment info__row">
-          <IconSVG class="info__icon" of="bitcoin" size="large" />
-          <p v-if="user?.crypto">
+        <div class="d-flex align-center ga-2 text-body-1">
+          <v-icon icon="mdi-bitcoin" size="large"></v-icon>
+          <span v-if="user?.crypto">
             {{ user.crypto.wallet }}
-          </p>
+          </span>
         </div>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import IconSVG from "@/components/IconSVG.vue";
 import { toRefs } from "vue";
 
 const props = defineProps({
@@ -54,47 +86,4 @@ const props = defineProps({
 const { user } = toRefs(props);
 </script>
 
-<style scoped>
-.account__info {
-  display: flex;
-  position: relative;
-  height: 100%;
-  flex-flow: row wrap;
-  flex: 3;
-  justify-content: center;
-}
-.info__column {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 0;
-  margin-bottom: 16px;
-  line-height: 1;
-  min-width: fit-content;
-}
-.account__image {
-  max-width: 250px;
-  max-height: 250px;
-}
-.info__row {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 16px;
-  align-items: flex-start;
-  width: 100%;
-}
-.info__payment {
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-  gap: 8px;
-}
-.info__payment p {
-  margin: 0;
-  word-break: break-all;
-  overflow-wrap: anywhere;
-}
-.info__icon {
-  flex-shrink: 0;
-}
-</style>
+<style scoped></style>

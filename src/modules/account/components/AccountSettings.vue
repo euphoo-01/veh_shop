@@ -1,18 +1,37 @@
 <template>
-  <div class="account__settings info__column">
-    <h3 class="settings__title">Settings</h3>
-    <label for="select-theme">Change theme:</label>
-    <SelectUI placeholder="Change theme:" name="select-theme" v-model="theme">
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </SelectUI>
-    <ButtonUI class="settings__logout" @click="logout" primary>Log Out</ButtonUI>
-  </div>
+  <v-sheet
+    class="account__settings pa-4 d-flex flex-column h-100 ml-4 justify-space-between"
+    width="auto"
+    rounded="0"
+    :style="{
+      backgroundColor:
+        'color-mix(in srgb, rgb(var(--v-theme-secondary)) 10%, rgb(var(--v-theme-background)))',
+      maxWidth: 'fit-content',
+    }"
+  >
+    <div class="d-flex flex-column ga-4">
+      <h3 class="text-h6 font-weight-bold mb-0">Settings</h3>
+
+      <v-select
+        v-model="theme"
+        :items="themes"
+        label="Change theme:"
+        variant="underlined"
+        color="primary"
+        density="compact"
+        hide-details="auto"
+        class="mt-2"
+        min-width="200"
+      ></v-select>
+    </div>
+
+    <v-btn color="primary" @click="logout" rounded="0" height="50" elevation="0" class="text-none">
+      Log Out
+    </v-btn>
+  </v-sheet>
 </template>
 
 <script setup lang="ts">
-import ButtonUI from "@/components/ui/ButtonUI.vue";
-import SelectUI from "@/components/ui/SelectUI.vue";
 import { useUserStore } from "@/modules/user/store";
 import { useSettingsStore } from "@/modules/settings/store";
 import { computed } from "vue";
@@ -21,6 +40,11 @@ const userStore = useUserStore();
 const settingsStore = useSettingsStore();
 
 const { logout } = userStore;
+
+const themes = [
+  { title: "Light", value: "light" },
+  { title: "Dark", value: "dark" },
+];
 
 const theme = computed({
   get() {
@@ -34,27 +58,4 @@ const theme = computed({
 });
 </script>
 
-<style scoped>
-.info__column {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 0;
-  margin-bottom: 16px;
-  line-height: 1;
-  min-width: fit-content;
-}
-
-.account__settings {
-  display: flex;
-  flex-direction: column;
-  max-width: fit-content;
-  gap: 16px;
-  flex: 1;
-  background-color: color-mix(in srgb, var(--secondary-color) 10%, var(--background-color));
-  height: 100vh;
-  padding: 16px;
-  height: auto;
-  margin-left: 16px;
-}
-</style>
+<style scoped></style>
