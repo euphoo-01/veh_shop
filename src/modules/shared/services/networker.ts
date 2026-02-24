@@ -150,5 +150,9 @@ export class Networker {
   }
 }
 
-const domainURL = "https://dummyjson.com";
-export const networker = new Networker(domainURL);
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+if (!apiBaseUrl) {
+  throw new Error("VITE_API_BASE_URL is not defined in .env file.");
+}
+
+export const networker = new Networker(apiBaseUrl);

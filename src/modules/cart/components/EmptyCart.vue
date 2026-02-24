@@ -1,6 +1,6 @@
 <template>
   <v-container class="d-flex flex-column align-center justify-center ga-6 py-16">
-    <v-icon icon="mdi-cart" size="128" color="secondary" style="opacity: 0.2"></v-icon>
+    <v-icon icon="mdi-cart" size="128" color="secondary" class="empty-cart-icon"></v-icon>
     <p class="text-h5 text-medium-emphasis">Your cart is empty</p>
     <v-btn
       color="primary"
@@ -18,4 +18,8 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped>
+.empty-cart-icon {
+  opacity: 0.2;
+}
+</style>

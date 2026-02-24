@@ -23,7 +23,7 @@
       <v-col cols="12" sm class="mb-4 mb-sm-0">
         <div class="d-flex flex-column align-center align-sm-start text-center text-sm-left">
           <h3
-            class="text-h6 font-weight-bold mb-1 cursor-pointer text-decoration-underline text-primary-hover"
+            class="text-h6 font-weight-bold mb-1 cursor-pointer text-decoration-underline text-primary"
             @click="goToProduct(item.id)"
           >
             {{ item.title }}
@@ -62,9 +62,9 @@
           </div>
           <v-btn
             variant="text"
-            color="error"
+            color="secondary"
             density="compact"
-            class="text-caption text-decoration-underline text-none px-0 text-error-hover"
+            class="text-caption text-decoration-underline text-none px-0 text-error"
             height="auto"
             @click="removeItem(item.id)"
           >
@@ -106,11 +106,11 @@ function goToProduct(id: Product["id"]) {
   cursor: pointer;
 }
 
-.text-primary-hover:hover {
+.text-primary:hover {
   color: rgb(var(--v-theme-primary));
 }
 
-.text-error-hover:hover {
-  color: rgb(var(--v-theme-error)) !important;
+.v-btn.text-error:hover {
+  color: rgb(var(--v-theme-error));
 }
 </style>

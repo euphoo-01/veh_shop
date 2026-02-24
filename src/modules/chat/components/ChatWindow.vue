@@ -14,7 +14,7 @@ const newMessage = ref<string>("");
 function sendMessage() {
   if (newMessage.value.trim()) {
     wsChat.value.sendMessage(newMessage.value);
-    messages.value.push({ text: newMessage.value, isMine: true });
+    newMessage.value = "";
   }
 }
 </script>
@@ -36,7 +36,7 @@ function sendMessage() {
         <v-btn icon="mdi-close" @click="emit('update:model-value', false)"></v-btn>
       </v-toolbar>
 
-      <v-card-text class="grow-1 pa-4">
+      <v-card-text class="grow pa-4">
         <div
           v-for="(message, idx) in messages"
           :kex="idx"
@@ -44,7 +44,7 @@ function sendMessage() {
           :class="message.isMine ? 'justify-end' : 'justify-start'"
         >
           <v-sheet
-            :color="message.isMine ? 'primary' : 'surface-variant'"
+            :color="message.isMine ? 'primary' : 'surface-light'"
             class="pa-2 rounded-lg"
             max-width="80%"
           >
