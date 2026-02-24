@@ -1,41 +1,85 @@
 <template>
-  <div class="cart__item cart_item">
-    <div class="cart_item__image-container" @click="goToProduct(item.id)">
-      <img
-        :src="item.thumbnail"
-        :alt="item.title"
-        class="cart_item__image"
-        crossorigin="anonymous"
-      />
-    </div>
-
-    <div class="cart_item__info">
-      <h3 class="cart_item__name" @click="goToProduct(item.id)">{{ item.title }}</h3>
-      <p class="cart_item__brand">{{ item.brand }}</p>
-      <p class="cart_item__price">{{ item.price }} $</p>
-    </div>
-
-    <div class="cart_item__controls">
-      <div class="cart_item__quantity-selector">
-        <button
-          class="cart_item__button"
-          @click="updateQuantity({ id: item.id, quantity: item.quantity - 1 })"
+  <v-card variant="outlined" color="surface-light" class="pa-4 text-high-emphasis" rounded="0">
+    <v-row no-gutters align="center">
+      <v-col cols="12" sm="auto" class="d-flex justify-center mb-4 mb-sm-0 mr-sm-6">
+        <v-sheet
+          width="100"
+          height="100"
+          color="surface-light"
+          class="d-flex align-center justify-center cursor-pointer"
+          @click="goToProduct(item.id)"
         >
-          -
-        </button>
-        <span class="cart_item__quantity">{{ item.quantity }}</span>
-        <button
-          class="cart_item__button"
-          @click="updateQuantity({ id: item.id, quantity: item.quantity + 1 })"
-        >
-          +
-        </button>
-      </div>
-      <button class="cart_item__remove" @click="removeItem(item.id)">Remove</button>
-    </div>
+          <v-img
+            :src="item.thumbnail"
+            :alt="item.title"
+            width="100%"
+            height="100%"
+            class="ma-2"
+            contain
+          />
+        </v-sheet>
+      </v-col>
 
-    <p class="cart_item__total">{{ (item.price * item.quantity).toFixed(2) }} $</p>
-  </div>
+      <v-col cols="12" sm class="mb-4 mb-sm-0">
+        <div class="d-flex flex-column align-center align-sm-start text-center text-sm-left">
+          <h3
+            class="text-h6 font-weight-bold mb-1 cursor-pointer text-decoration-underline text-primary-hover"
+            @click="goToProduct(item.id)"
+          >
+            {{ item.title }}
+          </h3>
+          <p class="text-subtitle-2 text-medium-emphasis mb-1">{{ item.brand }}</p>
+          <p class="text-body-1 font-weight-bold">{{ item.price }} $</p>
+        </div>
+      </v-col>
+
+      <v-col cols="12" sm="auto" class="mb-4 mb-sm-0 mr-sm-6">
+        <div class="d-flex flex-column align-center">
+          <div class="d-flex align-center border rounded-0 pa-1 mb-2">
+            <v-btn
+              icon="mdi-minus"
+              variant="text"
+              density="compact"
+              size="small"
+              color="high-emphasis"
+              @click="updateQuantity({ id: item.id, quantity: item.quantity - 1 })"
+              :disabled="item.quantity <= 1"
+            ></v-btn>
+            <span
+              class="text-body-1 font-weight-bold mx-3 text-high-emphasis"
+              style="min-width: 20px; text-align: center"
+            >
+              {{ item.quantity }}
+            </span>
+            <v-btn
+              icon="mdi-plus"
+              variant="text"
+              density="compact"
+              size="small"
+              color="high-emphasis"
+              @click="updateQuantity({ id: item.id, quantity: item.quantity + 1 })"
+            ></v-btn>
+          </div>
+          <v-btn
+            variant="text"
+            color="error"
+            density="compact"
+            class="text-caption text-decoration-underline text-none px-0 text-error-hover"
+            height="auto"
+            @click="removeItem(item.id)"
+          >
+            Remove
+          </v-btn>
+        </div>
+      </v-col>
+
+      <v-col cols="12" sm="auto" class="text-center text-sm-right">
+        <p class="text-h6 font-weight-bold mb-0" style="min-width: 100px">
+          {{ (item.price * item.quantity).toFixed(2) }} $
+        </p>
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script setup lang="ts">
@@ -58,121 +102,15 @@ function goToProduct(id: Product["id"]) {
 </script>
 
 <style scoped>
-.cart_item {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 16px;
-  padding: 16px;
-  border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
-  background: var(--background-color);
-  align-items: center;
-}
-
-@media (min-width: 576px) {
-  .cart_item {
-    grid-template-columns: 120px 1fr auto auto;
-    gap: 24px;
-  }
-}
-
-.cart_item__image-container {
-  width: 100px;
-  height: 100px;
-  cursor: pointer;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: color-mix(in srgb, var(--text-color) 5%, transparent);
-}
-
-.cart_item__image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.cart_item__info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.cart_item__name {
-  margin: 0;
-  font-size: 18px;
+.cursor-pointer {
   cursor: pointer;
 }
 
-.cart_item__name:hover {
-  color: var(--primary-color);
+.text-primary-hover:hover {
+  color: rgb(var(--v-theme-primary));
 }
 
-.cart_item__brand {
-  font-size: 14px;
-  color: var(--secondary-color);
-  margin: 0;
-}
-
-.cart_item__price {
-  font-weight: bold;
-  margin: 8px 0 0 0;
-}
-
-.cart_item__controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.cart_item__quantity-selector {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
-  padding: 4px;
-}
-
-.cart_item__button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 20px;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cart_item__button:hover {
-  color: var(--primary-color);
-}
-
-.cart_item__quantity {
-  font-weight: bold;
-  min-width: 20px;
-  text-align: center;
-}
-
-.cart_item__remove {
-  background: none;
-  border: none;
-  color: var(--secondary-color);
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline;
-}
-
-.cart_item__remove:hover {
-  color: var(--error-color);
-}
-
-.cart_item__total {
-  font-weight: bold;
-  font-size: 18px;
-  text-align: right;
-  min-width: 100px;
+.text-error-hover:hover {
+  color: rgb(var(--v-theme-error)) !important;
 }
 </style>

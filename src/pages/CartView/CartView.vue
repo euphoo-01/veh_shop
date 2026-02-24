@@ -1,13 +1,20 @@
 <template>
-  <h1 class="cart__title">Shopping Cart</h1>
-  <main class="cart">
-    <div v-if="totalItems > 0" class="cart__container">
-      <CartList :items="cartItems" />
-      <CartSummary />
+  <v-container class="cart-view fill-height align-start">
+    <h1 class="text-h4 font-weight-bold mb-8 w-100">Shopping Cart</h1>
+
+    <div v-if="totalItems > 0" class="w-100">
+      <v-row>
+        <v-col cols="12" md="8">
+          <CartList :items="cartItems" />
+        </v-col>
+        <v-col cols="12" md="4">
+          <CartSummary />
+        </v-col>
+      </v-row>
     </div>
 
-    <EmptyCart v-else />
-  </main>
+    <EmptyCart v-else class="w-100" />
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -21,25 +28,4 @@ const cartStore = useCartStore();
 const { cartItems, totalItems } = storeToRefs(cartStore);
 </script>
 
-<style scoped>
-.cart {
-  padding: 24px;
-}
-
-.cart__title {
-  margin-bottom: 32px;
-}
-
-.cart__container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-}
-
-@media (min-width: 992px) {
-  .cart__container {
-    grid-template-columns: 1fr 350px;
-    align-items: start;
-  }
-}
-</style>
+<style scoped></style>

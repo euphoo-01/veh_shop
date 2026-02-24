@@ -1,22 +1,51 @@
 <template>
-  <aside class="cart__summary summary">
-    <h2 class="summary__title">Order Summary</h2>
-    <div class="summary__row">
-      <span>Items ({{ totalItems }}):</span>
-      <span>{{ totalPrice }} $</span>
+  <v-card color="surface-light" variant="tonal" class="pa-4" rounded="0" elevation="0">
+    <v-card-title class="text-h5 font-weight-bold pa-0 mb-4 text-high-emphasis">
+      Order Summary
+    </v-card-title>
+
+    <div class="d-flex flex-column ga-3 text-high-emphasis">
+      <div class="d-flex justify-space-between text-body-1">
+        <span>Items ({{ totalItems }}):</span>
+        <span class="font-weight-medium">{{ totalPrice }} $</span>
+      </div>
+
+      <v-divider class="my-2"></v-divider>
+
+      <div class="d-flex justify-space-between text-h6 font-weight-bold">
+        <span>Total:</span>
+        <span>{{ totalPrice }} $</span>
+      </div>
+
+      <v-btn
+        color="primary"
+        block
+        size="large"
+        rounded="0"
+        height="50"
+        elevation="0"
+        class="mt-4 text-none"
+      >
+        Proceed to Checkout
+      </v-btn>
+
+      <v-btn
+        variant="text"
+        color="error"
+        block
+        rounded="0"
+        height="50"
+        class="text-none"
+        @click="clearCart()"
+      >
+        Clear Cart
+      </v-btn>
     </div>
-    <div class="summary__row summary__row--total">
-      <span>Total:</span>
-      <span>{{ totalPrice }} $</span>
-    </div>
-    <ButtonUI primary class="summary__checkout"> Proceed to Checkout </ButtonUI>
-    <ButtonUI secondary class="summary__clear" @click="clearCart()"> Clear Cart </ButtonUI>
-  </aside>
+  </v-card>
 </template>
 
 <script setup lang="ts">
 import { useCartStore } from "../store";
-import ButtonUI from "@/components/ui/ButtonUI.vue";
 import { storeToRefs } from "pinia";
 
 const cartStore = useCartStore();
@@ -24,37 +53,4 @@ const { totalItems, totalPrice } = storeToRefs(cartStore);
 const { clearCart } = cartStore;
 </script>
 
-<style scoped>
-.summary {
-  background-color: color-mix(in srgb, var(--primary-color) 5%, transparent);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.summary__title {
-  margin: 0;
-  font-size: 24px;
-}
-
-.summary__row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.summary__row--total {
-  border-top: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
-  padding-top: 16px;
-  font-weight: bold;
-  font-size: 20px;
-}
-
-.summary__checkout {
-  width: 100%;
-}
-
-.summary__clear {
-  width: 100%;
-}
-</style>
+<style scoped></style>

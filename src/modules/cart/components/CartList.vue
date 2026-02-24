@@ -1,5 +1,5 @@
 <template>
-  <div class="cart__list">
+  <div class="d-flex flex-column ga-4">
     <CartItem v-for="item in items" :key="item.id" :item="item" />
   </div>
 </template>
@@ -20,10 +20,4 @@ const props = withDefaults(
 const { items } = toRefs(props);
 </script>
 
-<style scoped>
-.cart__list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-</style>
+<style scoped></style>

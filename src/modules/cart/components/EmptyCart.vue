@@ -1,32 +1,21 @@
 <template>
-  <div class="cart--empty">
-    <IconSVG of="cart" size="extralarge" class="cart__empty_icon" />
-    <p class="cart__empty_text">Your cart is empty</p>
-    <ButtonUI primary @click="$router.push({ name: 'catalogue' })"> Go to Catalogue </ButtonUI>
-  </div>
+  <v-container class="d-flex flex-column align-center justify-center ga-6 py-16">
+    <v-icon icon="mdi-cart" size="128" color="secondary" style="opacity: 0.2"></v-icon>
+    <p class="text-h5 text-medium-emphasis">Your cart is empty</p>
+    <v-btn
+      color="primary"
+      size="large"
+      :to="{ name: 'catalogue' }"
+      rounded="0"
+      height="50"
+      elevation="0"
+      class="text-none"
+    >
+      Go to Catalogue
+    </v-btn>
+  </v-container>
 </template>
 
-<script setup lang="ts">
-import ButtonUI from "@/components/ui/ButtonUI.vue";
-import IconSVG from "@/components/IconSVG.vue";
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
-.cart--empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 64px 0;
-  gap: 24px;
-}
-
-.cart__empty_icon {
-  opacity: 0.2;
-}
-
-.cart__empty_text {
-  font-size: 20px;
-  color: var(--secondary-color);
-}
-</style>
+<style scoped></style>
