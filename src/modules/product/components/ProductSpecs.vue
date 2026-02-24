@@ -1,29 +1,50 @@
 <template>
-  <div class="product__specs specs">
-    <div class="specs__item">
-      <span class="specs__label">Warranty</span>
-      <span class="specs__value">{{ product.warrantyInformation }}</span>
-    </div>
-    <div class="specs__item">
-      <span class="specs__label">Shipping</span>
-      <span class="specs__value">{{ product.shippingInformation }}</span>
-    </div>
-    <div class="specs__item">
-      <span class="specs__label">Return Policy</span>
-      <span class="specs__value">{{ product.returnPolicy }}</span>
-    </div>
-    <div class="specs__item" v-if="product.weight">
-      <span class="specs__label">Weight</span>
-      <span class="specs__value">{{ product.weight }} kg</span>
-    </div>
-    <div class="specs__item" v-if="product.dimensions">
-      <span class="specs__label">Dimensions</span>
-      <span class="specs__value">
-        {{ product.dimensions.width }} x {{ product.dimensions.height }} x
-        {{ product.dimensions.depth }}
-      </span>
-    </div>
-  </div>
+  <v-sheet
+    class="product__specs pa-5"
+    rounded="0"
+    color="surface-light"
+    :style="{ '--v-theme-surface': 'transparent' }"
+  >
+    <v-row dense>
+      <v-col cols="6" sm="4" md="3" class="d-flex flex-column ga-1">
+        <span class="text-caption font-weight-bold text-uppercase text-medium-emphasis">
+          Warranty
+        </span>
+        <span class="text-body-2">{{ product.warrantyInformation }}</span>
+      </v-col>
+
+      <v-col cols="6" sm="4" md="3" class="d-flex flex-column ga-1">
+        <span class="text-caption font-weight-bold text-uppercase text-medium-emphasis">
+          Shipping
+        </span>
+        <span class="text-body-2">{{ product.shippingInformation }}</span>
+      </v-col>
+
+      <v-col cols="6" sm="4" md="3" class="d-flex flex-column ga-1">
+        <span class="text-caption font-weight-bold text-uppercase text-medium-emphasis">
+          Return Policy
+        </span>
+        <span class="text-body-2">{{ product.returnPolicy }}</span>
+      </v-col>
+
+      <v-col v-if="product.weight" cols="6" sm="4" md="3" class="d-flex flex-column ga-1">
+        <span class="text-caption font-weight-bold text-uppercase text-medium-emphasis">
+          Weight
+        </span>
+        <span class="text-body-2">{{ product.weight }} kg</span>
+      </v-col>
+
+      <v-col v-if="product.dimensions" cols="12" sm="8" md="6" class="d-flex flex-column ga-1">
+        <span class="text-caption font-weight-bold text-uppercase text-medium-emphasis">
+          Dimensions
+        </span>
+        <span class="text-body-2">
+          {{ product.dimensions.width }} x {{ product.dimensions.height }} x
+          {{ product.dimensions.depth }}
+        </span>
+      </v-col>
+    </v-row>
+  </v-sheet>
 </template>
 
 <script setup lang="ts">
@@ -34,29 +55,4 @@ const props = defineProps<{ product: Product }>();
 const { product } = toRefs(props);
 </script>
 
-<style scoped>
-.specs {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 16px;
-  background-color: color-mix(in srgb, var(--primary-color) 5%, transparent);
-  padding: 20px;
-}
-
-.specs__item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.specs__label {
-  font-size: 12px;
-  text-transform: uppercase;
-  color: var(--secondary-color);
-  font-weight: 700;
-}
-
-.specs__value {
-  font-size: 15px;
-}
-</style>
+<style scoped></style>

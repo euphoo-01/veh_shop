@@ -1,36 +1,73 @@
 <template>
-  <main class="product">
-    <IconSVG v-if="isLoading" class="product__loader" of="spinner" size="extralarge" />
-
-    <div v-else-if="productDetails" class="product__container">
-      <ModalUI :isVisible="isSuccessFormVisible" @switch-modal="switchSuccessModalVisible(false)"
-        ><h2>Success</h2>
-        <p>Product {{ productDetails.title }} is succesfully added to shopping cart!</p></ModalUI
-      >
-      <ModalUI :isVisible="isErrorFormVisible" @switch-modal="switchErrorModalVisible(false)"
-        ><h2>Error</h2>
-        <p>Product not added to the cart!</p></ModalUI
-      >
-      <ProductGallery :product="productDetails" />
-      <ProductDetails :product="productDetails" @add-to-cart="addToCart" />
-      <ProductReviews :reviews="productDetails.reviews" />
+  <v-container class="product-view py-8 align-start" style="min-height: 80vh">
+    <div v-if="isLoading" class="d-flex justify-center align-center w-100" style="height: 50vh">
+      <v-progress-circular indeterminate color="primary" size="64"></v-progress-circular>
     </div>
-  </main>
+
+    <div v-else-if="productDetails" class="w-100">
+      <v-dialog v-model="isSuccessFormVisible" max-width="400">
+        <v-card>
+          <v-card-title class="text-h5 font-weight-bold bg-success text-white">
+            Success
+          </v-card-title>
+          <v-card-text class="pa-4">
+            <p class="text-body-1">
+              Product <strong>{{ productDetails.title }}</strong> is succesfully added to shopping
+              cart!
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="success" variant="text" @click="switchSuccessModalVisible(false)">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="isErrorFormVisible" max-width="400">
+        <v-card>
+          <v-card-title class="text-h5 font-weight-bold bg-error text-white"> Error </v-card-title>
+          <v-card-text class="pa-4">
+            <p class="text-body-1">Product not added to the cart!</p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="error" variant="text" @click="switchErrorModalVisible(false)">
+              Close
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-row class="mb-10">
+        <v-col cols="12" md="6">
+          <ProductGallery :product="productDetails" />
+        </v-col>
+        <v-col cols="12" md="6">
+          <ProductDetails :product="productDetails" @add-to-cart="addToCart" />
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="12">
+          <ProductReviews :reviews="productDetails.reviews" />
+        </v-col>
+      </v-row>
+    </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
 import { useVehicleStore } from "@/modules/vehicle/store";
 import { useCartStore } from "@/modules/cart/store";
 import { useUserStore } from "@/modules/user/store";
-import IconSVG from "@/components/IconSVG.vue";
-import ModalUI from "@/components/ui/ModalUI.vue";
 import ProductGallery from "@/modules/product/components/ProductGallery.vue";
 import ProductDetails from "@/modules/product/components/ProductDetails.vue";
 import ProductReviews from "@/modules/product/components/ProductReviews.vue";
 import { onMounted, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter, useRoute } from "vue-router";
-import type { Car } from "@/modules/vehicle/types";
 
 const vehicleStore = useVehicleStore();
 const cartStore = useCartStore();
@@ -46,10 +83,10 @@ const isSuccessFormVisible = ref<boolean>(false);
 const isErrorFormVisible = ref<boolean>(false);
 
 function addToCart() {
-  if (isAuthorized && productDetails.value) {
+  if (isAuthorized.value && productDetails.value) {
     addItem(productDetails.value);
     switchSuccessModalVisible(true);
-  } else if (isAuthorized && !productDetails.value) {
+  } else if (isAuthorized.value && !productDetails.value) {
     switchErrorModalVisible(true);
   } else {
     router.push({ name: "login" });
@@ -65,7 +102,7 @@ function switchErrorModalVisible(value: boolean) {
 }
 
 onMounted(async () => {
-  const vehId = route.params.id as Car["id"] | undefined;
+  const vehId = Number(route.params.id);
   if (vehId) {
     await fetchVehicleById(vehId);
   }
@@ -73,35 +110,8 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.product {
+.product-view {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px;
-}
-
-@media (min-width: 768px) {
-  .product {
-    padding: 24px;
-  }
-}
-
-.product__loader {
-  margin: 128px auto;
-  display: block;
-  width: fit-content;
-}
-
-.product__container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-}
-
-@media (min-width: 768px) {
-  .product__container {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
-    gap: 40px;
-  }
 }
 </style>

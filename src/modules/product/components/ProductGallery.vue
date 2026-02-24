@@ -1,26 +1,48 @@
 <template>
-  <section class="product__gallery gallery">
-    <div class="gallery__main">
-      <img
+  <div class="product__gallery gallery">
+    <v-card
+      variant="outlined"
+      class="gallery__main mb-4 d-flex align-center justify-center overflow-hidden"
+      rounded="0"
+      color="surface"
+    >
+      <v-img
         :src="displayedImage"
         :alt="product.title"
         class="gallery__image"
-        crossorigin="anonymous"
-      />
+        max-width="100%"
+        max-height="100%"
+        cover
+      >
+        <template #placeholder>
+          <div class="d-flex align-center justify-center fill-height">
+            <v-progress-circular indeterminate color="primary"></v-progress-circular>
+          </div>
+        </template>
+      </v-img>
+    </v-card>
+
+    <div
+      v-if="product.images && product.images.length > 1"
+      class="gallery__list d-flex flex-wrap justify-center ga-3"
+    >
+      <v-hover v-for="(img, index) in product.images" :key="index" v-slot="{ isHovering, props }">
+        <v-card
+          v-bind="props"
+          width="80"
+          height="80"
+          rounded="0"
+          :variant="img === displayedImage ? 'outlined' : 'flat'"
+          :color="img === displayedImage ? 'primary' : 'transparent'"
+          class="cursor-pointer gallery__thumbnail"
+          @click="selectedImage = img"
+          :elevation="isHovering ? 2 : 0"
+        >
+          <v-img :src="img" :alt="`${product.title} view ${index + 1}`" cover aspect-ratio="1" />
+        </v-card>
+      </v-hover>
     </div>
-    <div class="gallery__list" v-if="product.images && product.images.length > 1">
-      <img
-        v-for="(img, index) in product.images"
-        :key="index"
-        :src="img"
-        class="gallery__thumbnail"
-        :class="{ 'gallery__thumbnail--active': img === displayedImage }"
-        @click="selectedImage = img"
-        :alt="`${product.title} view ${index + 1}`"
-        crossorigin="anonymous"
-      />
-    </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -48,50 +70,19 @@ watch(product.value, () => {
 .gallery {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .gallery__main {
-  width: auto;
   aspect-ratio: 4/3;
-  background-color: var(--background-color);
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
-}
-
-.gallery__image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.gallery__list {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 8px;
-  flex-flow: row wrap;
-  justify-content: center;
+  width: 100%;
 }
 
 .gallery__thumbnail {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  cursor: pointer;
-  border: 2px solid transparent;
   transition: all 0.2s ease;
+  border: 2px solid transparent;
 }
 
-.gallery__thumbnail:hover {
-  opacity: 0.8;
-}
-
-.gallery__thumbnail--active {
-  border-color: var(--primary-color);
+.v-card--variant-outlined {
+  border-width: 2px;
 }
 </style>

@@ -1,25 +1,35 @@
 <template>
-  <section class="product__reviews reviews" v-if="reviews && reviews.length">
-    <h3 class="reviews__title">Customer Reviews</h3>
-    <div class="reviews__list">
-      <div v-for="(review, index) in reviews" :key="index" class="reviews__card review">
-        <div class="review__header">
-          <span class="review__author">{{ review.reviewerName }}</span>
-          <span class="review__date">{{ formatDate(review.date) }}</span>
-        </div>
-        <div class="review__rating">
-          <span
-            v-for="n in 5"
-            :key="n"
-            class="review__star"
-            :class="{ 'review__star--filled': n <= review.rating }"
-            >★</span
-          >
-        </div>
-        <p class="review__comment">{{ review.comment }}</p>
-      </div>
-    </div>
-  </section>
+  <v-container v-if="reviews && reviews.length" class="product__reviews reviews pa-0 mt-10 pt-10">
+    <h3 class="text-h5 font-weight-bold mb-6">Customer Reviews</h3>
+
+    <v-row>
+      <v-col v-for="(review, index) in reviews" :key="index" cols="12" sm="6" md="4" class="d-flex">
+        <v-card
+          variant="outlined"
+          class="w-100 pa-5 d-flex flex-column h-100"
+          rounded="0"
+          :style="{ borderColor: 'rgb(var(--v-theme-surface-light))' }"
+        >
+          <div class="d-flex justify-space-between mb-2 text-body-2">
+            <span class="font-weight-bold">{{ review.reviewerName }}</span>
+            <span class="text-medium-emphasis">{{ formatDate(review.date) }}</span>
+          </div>
+
+          <v-rating
+            :model-value="review.rating"
+            color="warning"
+            density="compact"
+            size="small"
+            readonly
+            half-increments
+            class="mb-3"
+          ></v-rating>
+
+          <p class="text-body-2 font-italic mb-0">{{ review.comment }}</p>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -41,54 +51,6 @@ function formatDate(dateString: string) {
 
 <style scoped>
 .reviews {
-  grid-column: 1 / -1;
-  margin-top: 40px;
-  padding-top: 40px;
-  border-top: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
-}
-
-.reviews__title {
-  margin-bottom: 24px;
-}
-
-.reviews__list {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-}
-
-.review {
-  background: var(--background-color);
-  border: 1px solid color-mix(in srgb, var(--text-color) 10%, transparent);
-  padding: 20px;
-}
-
-.review__header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 15px;
-}
-
-.review__author {
-  font-weight: bold;
-}
-
-.review__date {
-  color: var(--secondary-color);
-}
-
-.review__rating {
-  margin-bottom: 12px;
-  color: #e0e0e0;
-}
-
-.review__star--filled {
-  color: #f1c40f;
-}
-
-.review__comment {
-  margin: 0;
-  font-style: italic;
+  border-top: 1px solid rgba(var(--v-theme-on-surface), 0.1);
 }
 </style>

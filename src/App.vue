@@ -28,7 +28,7 @@ watch(
   () => settingsStore.currentTheme,
   (newValue) => {
     document.documentElement.className = newValue;
-    theme.global.name.value = newValue;
+    theme.change(newValue);
   },
   { immediate: true },
 );
