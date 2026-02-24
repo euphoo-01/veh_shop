@@ -6,7 +6,7 @@
     "paths": {
       "@/*": ["./src/*"],
     },
-    "types": ["node"],
+    "types": ["node", "vuetify"],
     "allowJs": true,
     "checkJs": false,
     "strict": true,
