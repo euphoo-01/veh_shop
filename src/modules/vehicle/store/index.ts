@@ -93,9 +93,9 @@ export const useVehicleStore = defineStore("vehicle", () => {
       }
       switch (priceFilter.value) {
         case "asc":
-          return result.sort((a, b) => a.price - b.price);
+          return [...result].sort((a, b) => a.price - b.price);
         case "desc":
-          return result.sort((a, b) => b.price - a.price);
+          return [...result].sort((a, b) => b.price - a.price);
         default:
           return result;
       }
