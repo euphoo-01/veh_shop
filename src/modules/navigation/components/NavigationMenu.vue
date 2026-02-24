@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import ButtonUI from "@/components/ui/ButtonUI.vue";
-import { RouterLink } from "vue-router";
-import IconSVG from "@/components/IconSVG.vue";
-defineProps({
+import { toRefs } from "vue";
+
+const props = defineProps({
   username: {
     type: String,
     required: true,
@@ -20,38 +19,112 @@ defineProps({
     default: false,
   },
 });
+const { username, isAuthorized, totalProducts, isMobile } = toRefs(props);
 </script>
+
 <template>
-  <nav class="menu__content">
-    <RouterLink :to="{ name: 'home' }" active-class="menu__button--active"
-      ><ButtonUI secondary>Home</ButtonUI></RouterLink
+  <nav class="d-flex align-center flex-column flex-md-row ga-4">
+    <v-btn
+      :to="{ name: 'home' }"
+      variant="text"
+      color="on-surface"
+      class="nav-btn text-body-1 text-capitalize"
+      :class="{ 'w-100': isMobile }"
+      rounded="0"
+      :ripple="false"
+      height="50"
+      active-color="primary"
     >
+      Home
+    </v-btn>
 
-    <RouterLink :to="{ name: 'catalogue' }" active-class="menu__button--active"
-      ><ButtonUI secondary>Catalogue</ButtonUI></RouterLink
+    <v-btn
+      :to="{ name: 'catalogue' }"
+      variant="text"
+      color="on-surface"
+      class="nav-btn text-body-1 text-capitalize"
+      :class="{ 'w-100': isMobile }"
+      rounded="0"
+      :ripple="false"
+      height="50"
+      active-color="primary"
     >
-    <RouterLink
-      :to="{ name: 'account', params: { username } }"
-      active-class="menu__button--active"
-      v-if="isAuthorized"
-      ><ButtonUI secondary>Account</ButtonUI></RouterLink
-    >
-    <RouterLink :to="{ name: 'login' }" active-class="menu__button--active" v-else>
-      <ButtonUI secondary> Login </ButtonUI>
-    </RouterLink>
+      Catalogue
+    </v-btn>
 
-    <RouterLink
-      :to="{ name: 'cart', params: { username } }"
-      class="menu__cart_wrapper"
-      active-class="menu__icon--active"
+    <template v-if="isAuthorized">
+      <v-btn
+        :to="{ name: 'account', params: { username } }"
+        variant="text"
+        color="on-surface"
+        class="nav-btn text-body-1 text-capitalize"
+        :class="{ 'w-100': isMobile }"
+        rounded="0"
+        :ripple="false"
+        height="50"
+        active-color="primary"
+      >
+        Account
+      </v-btn>
+    </template>
+    <template v-else>
+      <v-btn
+        :to="{ name: 'login' }"
+        variant="text"
+        color="on-surface"
+        class="nav-btn text-body-1 text-capitalize"
+        :class="{ 'w-100': isMobile }"
+        rounded="0"
+        :ripple="false"
+        height="50"
+        active-color="primary"
+      >
+        Login
+      </v-btn>
+    </template>
+
+    <v-btn
       v-if="isAuthorized && !isMobile"
+      :to="{ name: 'cart', params: { username } }"
+      icon
+      variant="text"
+      color="on-surface"
+      aria-label="Cart"
+      class="cart-btn"
+      :ripple="false"
+      active-color="primary"
     >
-      <IconSVG of="cart" size="large" clickable />
-      <span v-if="totalProducts > 0" class="menu__cart_badge">{{
-        totalProducts > 9 ? "9+" : totalProducts
-      }}</span>
-    </RouterLink>
+      <v-badge
+        v-if="totalProducts > 0"
+        :content="totalProducts > 9 ? '9+' : totalProducts"
+        color="error"
+      >
+        <v-icon icon="mdi-cart" size="large"></v-icon>
+      </v-badge>
+      <v-icon v-else icon="mdi-cart" size="large"></v-icon>
+    </v-btn>
   </nav>
 </template>
 
-<style></style>
+<style scoped>
+.nav-btn {
+  min-width: 150px;
+  border-bottom: 3px solid transparent;
+  transition:
+    background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1),
+    border-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.nav-btn:hover {
+  background-color: rgba(var(--v-theme-primary), 0.2);
+  border-bottom-color: rgb(var(--v-theme-primary));
+}
+
+.nav-btn.v-btn--active {
+  border-bottom-color: rgb(var(--v-theme-primary));
+}
+
+.cart-btn:hover {
+  color: rgb(var(--v-theme-primary));
+}
+</style>

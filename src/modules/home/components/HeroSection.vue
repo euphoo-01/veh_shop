@@ -3,10 +3,7 @@
     <v-row align="center" justify="space-between" class="flex-column-reverse flex-md-row">
       <v-col cols="12" md="6" class="text-center text-md-left">
         <h1 class="text-h2 font-weight-bold mb-6 text-on-background">Find Your Dream Ride</h1>
-        <p
-          class="text-h5 text-secondary mb-8 mx-auto mx-md-0"
-          style="line-height: 1.6; max-width: 450px"
-        >
+        <p class="text-h5 text-secondary mb-8 mx-auto mx-md-0 hero-text">
           Explore our premium collection of vehicles and motorcycles.
         </p>
         <v-btn
@@ -41,11 +38,16 @@ function goToCatalogue() {
 </script>
 
 <style scoped>
+.hero-text {
+  line-height: 1.6;
+  max-width: 450px;
+}
+
 .hero-btn {
   transition: background-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .hero-btn:hover {
-  background-color: rgb(var(--v-theme-secondary)) !important;
+  background-color: rgb(var(--v-theme-secondary));
 }
 </style>

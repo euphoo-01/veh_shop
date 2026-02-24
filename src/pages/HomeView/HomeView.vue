@@ -24,10 +24,4 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
-@media (max-width: 768px) {
-  .home-view {
-    gap: 60px !important;
-  }
-}
-</style>
+<style scoped></style>
