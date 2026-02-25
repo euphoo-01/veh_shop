@@ -7,13 +7,13 @@ const emit = defineEmits(["update:model-value"]);
 const props = defineProps<{ modelValue: boolean }>();
 
 const chatStore = useChatStore();
-const { messages, wsChat } = storeToRefs(chatStore);
+const { messages } = storeToRefs(chatStore);
 const { modelValue } = toRefs(props);
 const newMessage = ref<string>("");
 
 function sendMessage() {
   if (newMessage.value.trim()) {
-    wsChat.value.sendMessage(newMessage.value);
+    chatStore.sendMessage(newMessage.value.trim());
     newMessage.value = "";
   }
 }
@@ -39,13 +39,13 @@ function sendMessage() {
       <v-card-text class="grow pa-4">
         <div
           v-for="(message, idx) in messages"
-          :kex="idx"
+          :key="idx"
           class="d-flex mb-4"
           :class="message.isMine ? 'justify-end' : 'justify-start'"
         >
           <v-sheet
             :color="message.isMine ? 'primary' : 'surface-light'"
-            class="pa-2 rounded-lg"
+            class="pa-2"
             max-width="80%"
           >
             {{ message.text }}
@@ -63,6 +63,7 @@ function sendMessage() {
           density="compact"
           hide-details
           autofocus
+          flat
           @keydown.enter="sendMessage"
         ></v-text-field>
         <v-btn

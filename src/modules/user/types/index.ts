@@ -15,6 +15,8 @@ export interface User {
   gender: string;
   image: string;
   address: Address;
+  crypto: { wallet: string };
+  bank: { cardNumber: string };
 }
 
 export interface LoginCredentials {

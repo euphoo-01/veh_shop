@@ -74,14 +74,10 @@
 </template>
 
 <script setup lang="ts">
+import type { User } from "@/modules/user/types";
 import { toRefs } from "vue";
 
-const props = defineProps({
-  user: {
-    type: Object,
-    required: true,
-  },
-});
+const props = defineProps<{ user: User }>();
 
 const { user } = toRefs(props);
 </script>

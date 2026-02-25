@@ -56,4 +56,4 @@ export type ProductsAPIResponse<T extends Product | ProductPreview<Product>> =
     }
   | NetworkError;
 
-export type ImageURL = `httpps://${string}.webp`;
+export type ImageURL = `https://${string}.webp`;

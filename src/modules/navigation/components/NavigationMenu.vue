@@ -1,23 +1,9 @@
 <script setup lang="ts">
 import { toRefs } from "vue";
-
-const props = defineProps({
-  username: {
-    type: String,
-    required: true,
-  },
-  isAuthorized: {
-    type: Boolean,
-    required: true,
-  },
-  totalProducts: {
-    type: Number,
-    required: true,
-  },
-  isMobile: {
-    type: Boolean,
-    default: false,
-  },
+import type { NavigationMenuProps } from "../types";
+const props = withDefaults(defineProps<NavigationMenuProps>(), {
+  isMobile: false,
+  username: "unknown",
 });
 const { username, isAuthorized, totalProducts, isMobile } = toRefs(props);
 </script>

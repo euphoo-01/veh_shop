@@ -20,13 +20,15 @@ const defaultUser: User = {
     stateCode: "",
     postalCode: "",
   },
+  crypto: { wallet: "" },
+  bank: { cardNumber: "" },
 };
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User>({ ...defaultUser });
   const accessToken = ref<string>(localStorage.getItem("accessToken") || "");
   const refreshToken = ref<string>(localStorage.getItem("refreshToken") || "");
-  const isAuthorized = ref<boolean>(false);
+  const isAuthorized = ref<boolean>(!!accessToken.value);
   const isLoading = ref<boolean>(false);
   const error = ref<{ status: number | null; message: string | null }>({
     status: null,
@@ -91,17 +93,13 @@ export const useUserStore = defineStore("user", () => {
       return;
     }
 
-    setTokens(result.accessToken, result.refreshToken);
-    user.value = {
-      id: result.id,
-      username: result.username,
-      email: result.email,
-      firstName: result.firstName,
-      lastName: result.lastName,
-      gender: result.gender,
-      image: result.image,
-      address: result.address,
-    };
+    const {
+      accessToken: responseAccessToken,
+      refreshToken: responseRefreshToken,
+      ...responseUserData
+    } = result;
+    setTokens(responseAccessToken, responseRefreshToken);
+    user.value = responseUserData;
 
     isLoading.value = false;
     router.push({ name: "account", params: { username: user.value.username } });

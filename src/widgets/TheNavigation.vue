@@ -5,6 +5,7 @@
         :username="username"
         :is-authorized="isAuthorized"
         :total-products="totalProducts"
+        :is-mobile="false"
       />
     </div>
 
@@ -48,7 +49,7 @@
               :username="username"
               :is-authorized="isAuthorized"
               :total-products="totalProducts"
-              is-mobile
+              :is-mobile="true"
               @click="isBurgerVisible = false"
             />
           </v-card-text>

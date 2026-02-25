@@ -8,11 +8,8 @@
     <TheNavigation />
   </header>
 </template>
-<script>
-import TheNavigation from '@/widgets/TheNavigation.vue';
-export default {
-  components: { TheNavigation },
-};
+<script setup lang="ts">
+import TheNavigation from "@/widgets/TheNavigation.vue";
 </script>
 <style>
 header {
