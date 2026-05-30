@@ -28,7 +28,7 @@ export const useUserStore = defineStore("user", () => {
   const user = ref<User>({ ...defaultUser });
   const accessToken = ref<string>(localStorage.getItem("accessToken") || "");
   const refreshToken = ref<string>(localStorage.getItem("refreshToken") || "");
-  const isAuthorized = ref<boolean>(!!accessToken.value);
+  const isAuthorized = ref<boolean>(!!accessToken);
   const isLoading = ref<boolean>(false);
   const error = ref<{ status: number | null; message: string | null }>({
     status: null,
@@ -93,13 +93,20 @@ export const useUserStore = defineStore("user", () => {
       return;
     }
 
-    const {
-      accessToken: responseAccessToken,
-      refreshToken: responseRefreshToken,
-      ...responseUserData
-    } = result;
-    setTokens(responseAccessToken, responseRefreshToken);
-    user.value = responseUserData;
+    setTokens(result.accessToken, result.refreshToken);
+    user.value = {
+      // или лучше user.value = result; ?
+      id: result.id,
+      username: result.username,
+      email: result.email,
+      firstName: result.firstName,
+      lastName: result.lastName,
+      gender: result.gender,
+      image: result.image,
+      address: result.address,
+      crypto: result.crypto,
+      bank: result.bank,
+    };
 
     isLoading.value = false;
     router.push({ name: "account", params: { username: user.value.username } });

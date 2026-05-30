@@ -2,6 +2,41 @@
 
 [**Открыть демо на Vercel**](https://veh-shop.vercel.app/)
 
+## Скриншоты
+
+<p align="center">
+  <img src="screenshots/Screenshot%202026-05-30%20at%2021-40-56%20Veh%20Shop.png" alt="Главная страница VehShop" width="100%">
+</p>
+
+<table>
+  <tr>
+    <td width="50%">
+      <img src="screenshots/Screenshot%202026-05-30%20at%2021-41-07%20Veh%20Shop.png" alt="Каталог транспорта" width="100%">
+      <sub><strong>Каталог</strong> — фильтрация, сортировка и сетка товаров.</sub>
+    </td>
+    <td width="50%">
+      <img src="screenshots/Screenshot%202026-05-30%20at%2021-41-15%20Veh%20Shop.png" alt="Карточка товара" width="100%">
+      <sub><strong>Карточка товара</strong> — галерея, характеристики, цена и отзывы.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="screenshots/Screenshot%202026-05-30%20at%2021-42-06%20Veh%20Shop.png" alt="Личный кабинет" width="100%">
+      <sub><strong>Личный кабинет</strong> — профиль, адрес, оплата и настройки темы.</sub>
+    </td>
+    <td width="50%">
+      <img src="screenshots/Screenshot%202026-05-30%20at%2021-42-23%20Veh%20Shop.png" alt="Корзина" width="100%">
+      <sub><strong>Корзина</strong> — позиции заказа, количество и итоговая сумма.</sub>
+    </td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="screenshots/Screenshot%202026-05-30%20at%2021-42-52%20Veh%20Shop.png" alt="Окно чата поддержки" width="280">
+  <br>
+  <sub><strong>Чат поддержки</strong> — WebSocket-общение в отдельном виджете.</sub>
+</p>
+
 ## Функциональность
 
 ### Каталог и Товары
